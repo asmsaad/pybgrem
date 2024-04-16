@@ -1,62 +1,15 @@
 from tkinter import *
+from tkinter import ttk
 from PIL import Image, ImageTk
 from threading import Thread
-import time
-from gui.support.appinfo import *
-from gui.support.appvect import *
 
 
 
-
-
-
-
-class AppWindow:
-    app_geometry = app_dimensions
-    
-    
-    def __init__(self,tool_window):
-        self.tool_window = tool_window
-        
-    #Apply all configurations
-    def configure(self):
-        self.window_config()
-
-    def window_config(self):
-        #Center the window initially 
-        self.center_window()
-
-        self.tool_window.resizable(False, False)
-
-        self.app_default_nav_bar()
-
-        
-        
-    def center_window( self):
-        screen_width = self.tool_window.winfo_screenwidth()
-        screen_height = self.tool_window.winfo_screenheight()
-
-        x_coordinate = (screen_width / 2) - (self.app_geometry['width'] / 2)
-        y_coordinate = (screen_height / 2) - (self.app_geometry['height'] / 2)
-
-        self.tool_window.geometry("%dx%d+%d+%d" % (self.app_geometry['width'], self.app_geometry['height'], x_coordinate, y_coordinate))
-
-
-    def app_default_nav_bar(self):
-        self.tool_window.title(APP_TITLE)
-        self.tool_window.iconphoto(True, APP_ICONS_.get('app_logo'))
-
-
-
-
-
-
-
-class TkGif:
+class CanvasGif:
     stop_animation = True
 
-    def __init__(self,file,gif_label) -> None:
-        self.gif_label = gif_label
+    def __init__(self,file,gif_canvas) -> None:
+        self.gif_canvas = gif_canvas
         self.file = file
         
         self.info = Image.open(self.file)
@@ -82,18 +35,35 @@ class TkGif:
         # if self.stop_animation == True: break
 
         image = self.photoimage_objects[current_frame]
-        self.gif_label.configure(image=image)
+        # self.gif_canvas.configure(image=image)
+
+        # image = PhotoImage(file=image_path)
+        # Get the width and height of the canvas
+        canvas_width = self.gif_canvas.winfo_width()
+        canvas_height = self.gif_canvas.winfo_height()
+        # Calculate the center coordinates of the canvas
+        center_x = canvas_width // 2
+        center_y = canvas_height // 2
+        # Create the image on the canvas at the center coordinates
+        self.gif_canvas.create_image(center_x, center_y, anchor=CENTER, image=image)
+        # Keep a reference to the image to prevent it from being garbage collected
+        self.gif_canvas.image = image
+
+
+
+
+
         current_frame = current_frame + 1
         if current_frame == self.total_frames :
             current_frame = 0
         # time.sleep(0.05)
         if self.stop_animation != True: 
-            self.gif_label.after(60, lambda: self.animation(current_frame))
-        else:
-            if self.download_btn == True:
-                image = PhotoImage(file="gui/res/icons/download_hover_18x18.png")
-                self.gif_label.configure(image=image)
-                self.gif_label.image = image
+            self.gif_canvas.after(60, lambda: self.animation(current_frame))
+        # else:
+        #     if self.download_btn == True:
+        #         image = PhotoImage(file="gui/res/icons/download_hover_18x18.png")
+        #         self.gif_canvas.configure(image=image)
+        #         self.gif_canvas.image = image
 
             
 
@@ -101,16 +71,37 @@ class TkGif:
         self.stop_animation = True
 
 
-    def exceptional_download_btn(self):
-        self.download_btn = True
 
-        # self.gif_label['bg']  = 'red'
-        download_report_img = APP_ICONS_.get('download_hover',dimension=(18,18))
+
+
+
+
+class Tooltip:
+    def __init__(self, widget, text):
+        print('***')
+        self.widget = widget
+        self.text = text
+        self.tooltip = None
+        self.widget.bind("<Enter>", self.enter)
+        self.widget.bind("<Leave>", self.leave)
+
+    def enter(self, event=None):
+        print('---')
+        x, y, _, _ = self.widget.bbox("insert")
+        x += self.widget.winfo_rootx() + 25
+        y += self.widget.winfo_rooty() + 25
         
-        self.gif_label.configure(image=download_report_img)
-        # self.gif_label['image']  = download_report_img
-        # self.gif_label.image = download_report_img
+        self.tooltip = Toplevel(self.widget)
+        self.tooltip.wm_overrideredirect(True)
+        self.tooltip.wm_geometry(f"+{x}+{y}")
+        
+        label = ttk.Label(self.tooltip, text=self.text, background="#ffffe0", relief="solid", borderwidth=1, font=("TkDefaultFont", 8))
+        label.pack(ipadx=1)
 
+    def leave(self, event=None):
+        if self.tooltip:
+            self.tooltip.destroy()
+            self.tooltip = None
 
 
 

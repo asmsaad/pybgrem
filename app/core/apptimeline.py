@@ -4,6 +4,8 @@ from app.core.appsettings import *
 from app.core.appeffects import ImageHoverEffect
 from app.core.appvectors import *
 from app.core.appbgrem import *
+from app.core.tksupport import CanvasGif
+
 import os,time
 from threading import Thread
 
@@ -25,7 +27,7 @@ class AppTimeline:
     show_timeline_status =True
     tools_widgets = {}
     tools={
-         "Control":{"Left shift":{'dim':(26,26)}, "Current":{'dim':(20,20)}, "Right shift": {'dim':(26,26)}},
+         "Control":{"Left shift":{'dim':(26,26)}, "Current":{'dim':(20,20)}, "Right shift": {'dim':(26,26)} , "Single Run": {'dim':(24,24)} , "Batch Run": {'dim':(24,24)}},
         #  "Settings":{"Switch on":{'dim':(30,30)}},         
     }
 
@@ -162,7 +164,8 @@ class AppTimeline:
             self.timeline_widgets[img_path]['widgets']['canvas']['processed'].pack_propagate(False)
             self.timeline_widgets[img_path]['widgets']['canvas']['processed'].pack()
             # self.place_image_center(self.timeline_widgets[img_path]['widgets']['canvas']['processed'],image_path=img_path)
-            self.place_image_center(self.timeline_widgets[img_path]['widgets']['canvas']['processed'],image_path="app/res/icons/timeline/remove_able.png")
+            self.place_image_center(self.timeline_widgets[img_path]['widgets']['canvas']['processed'],image=Image.open("app/res/icons/timeline/remove_able.png"))
+            
 
 
 
@@ -347,14 +350,21 @@ class AppTimeline:
             #click to show image
             if image['processed'] == '':
                 #do removing process
-                image['processed'] = REMOVE_BG.remove(image['original'])
-                self.appcanvas.update_imgae(image=image['processed'])
-                ...
+                def make_remove():
+                    self.place_image_center(modified_img_canvas,image=Image.open("app/res/icons/timeline/loading.png"))
+                    image['processed'] = REMOVE_BG.remove(image['original'])                    
+                    self.place_image_center(modified_img_canvas,image=image['processed'])
+                    self.appcanvas.update_imgae(image=image['processed'])
+                remove_bg_fun = Thread(target=make_remove)
+                remove_bg_fun.start()
+                # remove_bg_fun.join()
+
             else:
                 self.appcanvas.update_imgae(image=image['processed'])
+                self.place_image_center(modified_img_canvas,image=image['processed'])
                 ...
 
-            self.place_image_center(modified_img_canvas,image=image['processed'])
+            
 
 
         self.SELECTED_IMAGE_FROM_TIMELINE={

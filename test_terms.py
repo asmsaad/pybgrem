@@ -221,8 +221,8 @@
 
 
 
-import os
-from PIL import Image, ImageDraw, ImageFont
+# import os
+# from PIL import Image, ImageDraw, ImageFont
 
 
 
@@ -230,47 +230,62 @@ from PIL import Image, ImageDraw, ImageFont
 
 
 
-class CenterAlignTextImage:
-    def __init__(self,text,fontsize=13*10,font_loc=os.path.abspath("app/res/font/roboto/Roboto-Light.ttf"),fg='black',bg='orange' , dim = (60*10, 28*10 )):
-        self.bg = bg
-        self.dim  = dim 
+# class CenterAlignTextImage:
+#     def __init__(self,text,fontsize=13*10,font_loc=os.path.abspath("app/res/font/roboto/Roboto-Light.ttf"),fg='black',bg='orange' , dim = (60*10, 28*10 )):
+#         self.bg = bg
+#         self.dim  = dim 
 
-        img_circle = self.base_image()
-        img_number = self.get_number_img(text,fg=fg,fontsize=fontsize,font_loc=font_loc)
-        self.overlay_images(img_circle, img_number)
+#         img_circle = self.base_image()
+#         img_number = self.get_number_img(text,fg=fg,fontsize=fontsize,font_loc=font_loc)
+#         self.overlay_images(img_circle, img_number)
 
-    #todo making circle image
-    def base_image(self):
-        width, height = self.dim  # Adjust according to your needs
-        image = Image.new("RGBA", (width, height) , None if self.bg == None else self.bg)
-        return image
+#     #todo making circle image
+#     def base_image(self):
+#         width, height = self.dim  # Adjust according to your needs
+#         image = Image.new("RGBA", (width, height) , None if self.bg == None else self.bg)
+#         return image
 
-    #todo making nuber image
-    def get_number_img(self,text,fg='white',fontsize=130,font_loc=''):
-        canvas = Image.new('RGBA', (1000,1000))
-        draw = ImageDraw.Draw(canvas)
-        font = ImageFont.truetype(font_loc,fontsize)
-        draw.text((0, 0), text, font=font, fill=fg)
-        bbox = canvas.getbbox()
-        cropped_image = canvas.crop(bbox)
-        # cropped_image.show()
-        return cropped_image
+#     #todo making nuber image
+#     def get_number_img(self,text,fg='white',fontsize=130,font_loc=''):
+#         canvas = Image.new('RGBA', (1000,1000))
+#         draw = ImageDraw.Draw(canvas)
+#         font = ImageFont.truetype(font_loc,fontsize)
+#         draw.text((0, 0), text, font=font, fill=fg)
+#         bbox = canvas.getbbox()
+#         cropped_image = canvas.crop(bbox)
+#         # cropped_image.show()
+#         return cropped_image
 
-    def center_secondary_rectangle(self,base_width, base_height, secondary_width, secondary_height):
-        base_center_x = base_width // 2
-        base_center_y = base_height // 2
-        secondary_x = base_center_x - (secondary_width // 2)
-        secondary_y = base_center_y - (secondary_height // 2)
-        return (secondary_x, secondary_y)
+#     def center_secondary_rectangle(self,base_width, base_height, secondary_width, secondary_height):
+#         base_center_x = base_width // 2
+#         base_center_y = base_height // 2
+#         secondary_x = base_center_x - (secondary_width // 2)
+#         secondary_y = base_center_y - (secondary_height // 2)
+#         return (secondary_x, secondary_y)
 
-    def overlay_images(self,base_image, overlay_image):
-        self.result_image = base_image.copy()
-        self.result_image.paste(overlay_image, self.center_secondary_rectangle(base_image.size[0], base_image.size[1], overlay_image.size[0], overlay_image.size[1],), overlay_image)
-        return self.result_image
+#     def overlay_images(self,base_image, overlay_image):
+#         self.result_image = base_image.copy()
+#         self.result_image.paste(overlay_image, self.center_secondary_rectangle(base_image.size[0], base_image.size[1], overlay_image.size[0], overlay_image.size[1],), overlay_image)
+#         return self.result_image
     
-    def get_img(self):
-        return self.result_image
+#     def get_img(self):
+#         return self.result_image
 
 
-CenterAlignTextImage('Original').get_img().resize((60, 28), Image.LANCZOS).rotate(90, expand=True).show()
-CenterAlignTextImage('Modified').get_img().resize((60, 28), Image.LANCZOS).show()
+# CenterAlignTextImage('Original').get_img().resize((60, 28), Image.LANCZOS).rotate(90, expand=True).show()
+# CenterAlignTextImage('Modified').get_img().resize((60, 28), Image.LANCZOS).show()
+
+
+from tkinter import *
+from app.core.tksupport import Tooltip
+
+# Create the main window
+root = Tk()
+root.geometry("300x200")
+
+# Create a button with a tooltip
+button = Button(root, text="Hover over me")
+button.pack(pady=20)
+Tooltip(button, "This is a tooltip")
+
+root.mainloop()

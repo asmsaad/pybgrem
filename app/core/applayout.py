@@ -9,6 +9,8 @@ from app.core.apptimeline import AppTimeline
 from app.core.appsettings import *
 from app.core.appmenu import AppMenu
 from app.core.appbgrem import *
+from app.core.tksupport import Tooltip
+
 
 
 
@@ -115,7 +117,7 @@ class AppMenuIcon:
     tools={
          "File":{"New":'', "Import image":'', "Import folder": "" , "Import video": "" , "Save": "",  "Save as": ""},
          "Edit":{"Copy":'', "Cut":'', "Paste": "" , "Undo": "" , "Redo": ""},
-         "Run":{"Single Run":'', "Batch Run":''},
+        #  "Run":{"Single Run":'', "Batch Run":''},
     }
     def __init__(self,root) -> None:
         self.root = root
@@ -144,6 +146,7 @@ class AppMenuIcon:
                 self.tools_widgets[each_section][each_tool]['button']['image'] = self.tools_widgets[each_section][each_tool]['image']['default']
                 self.tools_widgets[each_section][each_tool]['button'].image = self.tools_widgets[each_section][each_tool]['image']['default']
                 self.tools_widgets[each_section][each_tool]['button'].pack(side=LEFT)
+                Tooltip(self.tools_widgets[each_section][each_tool]['button'],each_tool)
                 ImageHoverEffect(self.tools_widgets[each_section][each_tool]['button'], (self.tools_widgets[each_section][each_tool]['image']['default'], self.tools_widgets[each_section][each_tool]['image']['hover'] ) )
 
 
