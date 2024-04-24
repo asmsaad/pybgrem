@@ -8,10 +8,12 @@ from tkinter import *
 
 
 class ImageHoverEffect:
-    def __init__(self,widget_name:object,images:tuple) -> None:
+    def __init__(self,widget_name:object,images:tuple,tooltip=None) -> None:
         self.widget_name = widget_name
         self.default_img = images[0]
         self.hover_img = images[1]
+
+        self.tooltip = tooltip
         
         self.widget_name.bind('<Enter>' , self.on_mouse_enter_EL) 
         self.widget_name.bind('<Leave>' , self.on_mouse_leave_EL) 
@@ -34,6 +36,8 @@ class ImageHoverEffect:
         # self.widget_name['bg'] = 'orange'
         self.widget_name['image'] = self.hover_img
         self.widget_name.image = self.hover_img
+        
+        if self.tooltip != None :        self.tooltip.enter()
 
 
     def on_mouse_leave_EL(self,e):
@@ -44,6 +48,8 @@ class ImageHoverEffect:
         # self.widget_name['bg'] = 'yellow'
         self.widget_name['image'] = self.default_img
         self.widget_name.image = self.default_img
+
+        if self.tooltip != None :        self.tooltip.leave()
 
 
 

@@ -1,112 +1,74 @@
+from tkinter import *
+from tkinter import ttk
+
+def change_text():
+    menubar.entryconfigure(0, label="New Label")
+
+root = Tk()
+
+menubar = Menu(root)
+menu = Menu(menubar, tearoff=0)
+menu.add_command(label="Original Label", command=change_text)
+menubar.add_cascade(label="Menu", menu=menu)
+
+# Adding another menu item directly to the menubar
+menubar.add_command(label="Another Menu Item")
+
+root.config(menu=menubar)
+
+
+menubar = Menu(root)
+menu = Menu(menubar, tearoff=0)
+
+menu.add_command(label="one", command=change_text)
+menubar.add_cascade(label="two", menu=menu)
+
+# Adding another menu item directly to the menubar
+menubar.add_command(label="Five")
+
+
+root.config(menu=menubar)
+
+
+
+
+root.mainloop()
+
+
+
+
+
+
+
+#todo scroll 001
 # import tkinter as tk
 # from tkinter import scrolledtext
+# from tkinter import messagebox
 
+# def on_scroll(e):
+    
+#     # Get the current position of the scrollbar
+#     scroll_position = text_widget.yview()[1]
+#     print(scroll_position)
 
-# aggrements='''
-# SOFTWARE LICENSE AGREEMENT
+#     # If scrollbar is at the bottom (scroll_position == 1), show popup warning
+#     if scroll_position == 1:
+#         messagebox.showwarning("Warning", "You are at the end of the text!")
 
-# This Software License Agreement ("Agreement") is entered into by and between [Your Company Name], a company organized and existing under the laws of [Your Country/State], with its principal place of business at [Your Address] ("Licensor"), and the user of the software ("Licensee").
+# root = Tk()
+# root.title("Scrollable Text with Popup Warning")
 
-# 1. LICENSE GRANT
+# text_widget = scrolledtext.ScrolledText(root, wrap=tk.WORD)
+# text_widget.pack(expand=True, fill=tk.BOTH)
+# text_widget.insert(tk.INSERT, aggrements)
 
-# Subject to the terms and conditions of this Agreement, Licensor hereby grants Licensee a [non-exclusive, non-transferable, revocable] license to use the software ("Software") provided by Licensor, including any updates and modifications, solely for Licensee's internal business purposes.
+# # Bind the scrollbar's movement to the on_scroll function
 
-# 2. RESTRICTIONS
-
-# Licensee shall not:
-# - Modify, adapt, or create derivative works of the Software.
-# - Reverse engineer, decompile, or disassemble the Software.
-# - Remove or alter any copyright, trademark, or other proprietary notices from the Software.
-# - Rent, lease, sublicense, or otherwise transfer the Software to any third party.
-
-# 3. OWNERSHIP
-
-# Licensor retains all right, title, and interest in and to the Software, including all intellectual property rights therein. This Agreement does not grant Licensee any ownership rights in the Software.
-
-# 4. SUPPORT AND MAINTENANCE
-
-# Licensor may, at its sole discretion, provide support and maintenance services for the Software. Licensee acknowledges that any such services are provided on an "as-is" basis, and Licensor makes no warranties or representations regarding the availability or quality of such services.
-
-# 5. DISCLAIMER OF WARRANTIES
-
-# THE SOFTWARE IS PROVIDED "AS IS," WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL LICENSOR BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-# 6. TERMINATION
-
-# This Agreement shall remain in effect until terminated by either party. Licensor may terminate this Agreement immediately upon written notice if Licensee breaches any term or condition of this Agreement. Upon termination, Licensee shall cease all use of the Software and destroy all copies thereof.
-
-# 7. MISCELLANEOUS
-
-# This Agreement constitutes the entire agreement between the parties concerning the subject matter hereof and supersedes all prior agreements and understandings, whether written or oral, relating to such subject matter. This Agreement may be amended only by a written instrument signed by both parties. This Agreement shall be governed by and construed in accordance with the laws of [Your Jurisdiction]. Any dispute arising under or in connection with this Agreement shall be subject to the exclusive jurisdiction of the courts located in [Your Jurisdiction].
-
-# IN WITNESS WHEREOF, the parties hereto have executed this Agreement as of the Effective Date.
-
-# [Your Company Name]
-
-# By: _______________________
-# Name: _____________________
-# Title: ______________________
-# Date: ______________________
-
-# Licensee
-
-# By: _______________________
-# Name: _____________________
-# Title: ______________________
-# Date: ______________________
-
-# '''
-# def agree_checkbox_state():
-#     if agree_checkbox_var.get():
-#         agree_button.config(state=tk.NORMAL)
-#     else:
-#         agree_button.config(state=tk.DISABLED)
-
-# def agree_button_click():
-#     # Add your logic here for what happens when the user clicks "I Agree"
-#     root.destroy()
-
-# def check_scroll(*args):
-#     # Get the current scrollbar position
-#     scrollbar_position = agree_checkbox.get()[0]
-
-#     # Get the total number of lines in the Text widget
-#     total_lines = int(terms_text.index('end').split('.')[0])
-
-#     # Calculate the current scrolled line number
-#     current_line_number = int(total_lines * scrollbar_position)
-
-#     # Print the current scrolled line number
-#     print("Current scrolled line number:", current_line_number)
-
-# # Create main window
-# root = tk.Tk()
-# root.title("User Agreement")
-
-# # Create scrolled text for terms and conditions
-# terms_text = scrolledtext.ScrolledText(root, width=150, height=10, wrap=tk.WORD, font=('Roboto', 10))
-# terms_text.insert(tk.INSERT, aggrements)
-# terms_text.grid(row=0, column=0, padx=0, pady=10, columnspan=2)
-
-# # Create checkbox for agreeing to terms
-# agree_checkbox_var = tk.BooleanVar()
-# agree_checkbox = tk.Checkbutton(root, text="I agree to the terms and conditions", variable=agree_checkbox_var,
-#                                  command=agree_checkbox_state)
-# agree_checkbox.grid(row=1, column=0, padx=10, pady=10)
-
-# # Create button to confirm agreement
-# agree_button = tk.Button(root, text="I Agree", state=tk.DISABLED, command=agree_button_click)
-# agree_button.grid(row=1, column=1, padx=10, pady=10)
-
-# # # Add scrollbar
-# # scrollbar = tk.Scrollbar(root, command=terms_text.yview)
-# # scrollbar.grid(row=0, column=1, sticky='ns')
-# # terms_text.config(yscrollcommand=scrollbar.set)
-
-# # Bind check_scroll function to the <Configure> event of the ScrolledText widget
-# terms_text.bind("<Configure>", check_scroll)
 
 # root.mainloop()
+
+
+
 
 
 
@@ -276,16 +238,64 @@
 # CenterAlignTextImage('Modified').get_img().resize((60, 28), Image.LANCZOS).show()
 
 
-from tkinter import *
-from app.core.tksupport import Tooltip
+# #todo pdf 
 
-# Create the main window
-root = Tk()
-root.geometry("300x200")
+# import tkinter as tk
+# from tkinter import filedialog, messagebox
+# from pdf2image import convert_from_path
 
-# Create a button with a tooltip
-button = Button(root, text="Hover over me")
-button.pack(pady=20)
-Tooltip(button, "This is a tooltip")
+# class PDFViewer:
+#     def __init__(self, master):
+#         self.master = master
+#         self.master.title("PDF Viewer")
+        
+#         self.canvas = tk.Canvas(self.master)
+#         self.canvas.pack(fill=tk.BOTH, expand=True)
 
-root.mainloop()
+#         self.load_button = tk.Button(self.master, text="Open PDF", command=self.open_pdf)
+#         self.load_button.pack()
+
+#     def open_pdf(self):
+#         file_path = filedialog.askopenfilename(filetypes=[("PDF files", "*.pdf")])
+#         if file_path:
+#             try:
+#                 images = convert_from_path(file_path)
+#                 for image in images:
+#                     self.display_image(image)
+#             except Exception as e:
+#                 messagebox.showerror("Error", f"An error occurred: {e}")
+
+#     def display_image(self, image):
+#         photo = tk.PhotoImage(master=self.canvas, image=image)
+#         self.canvas.create_image(0, 0, anchor=tk.NW, image=photo)
+#         self.canvas.image = photo
+
+# # Create the main window
+# root = tk.Tk()
+# app = PDFViewer(root)
+# root.mainloop()
+
+
+
+
+
+
+# import numpy as np
+
+# def generate_exponential_list(start_range, end_range, point_number):
+#     # Calculate the base for the exponential growth
+#     base = (end_range / start_range) ** (1 / (point_number - 1))
+    
+#     # Generate the list of exponentially increasing values
+#     exponential_list = [int(start_range * (base ** i)) for i in range(point_number)]
+    
+#     return exponential_list
+
+# # Example usage:
+# start_range = 80
+# end_range = 250
+# point_number = 10
+
+# exponential_values = generate_exponential_list(start_range, end_range, point_number)
+# # print("Exponential values:", exponential_values)
+

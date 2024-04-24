@@ -82,7 +82,7 @@ class NavigationBar:
 class WindowConfiguration:
     def __init__(self, window) -> None:
         self.window = window
-        self.window.wm_attributes("-topmost", 1)
+        # self.window.wm_attributes("-topmost", 1)
 
     def geometry(self, width, height, align='center') -> None:
         self.width = width

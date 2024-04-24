@@ -14,8 +14,8 @@ icons_dir = {
     'New' : {'img' : root_res_dir+'tools/new_canvas.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
     'New_hover' : {'img' : root_res_dir+'tools/new_canvas_hover.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
 
-    'Import image' : {'img' : root_res_dir+'tools/add_image.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
-    'Import image_hover' : {'img' : root_res_dir+'tools/add_image_hover.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
+    'Import images' : {'img' : root_res_dir+'tools/add_image.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
+    'Import images_hover' : {'img' : root_res_dir+'tools/add_image_hover.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
 
     'Import video' : {'img' : root_res_dir+'tools/add_video.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
     'Import video_hover' : {'img' : root_res_dir+'tools/add_video_hover.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
@@ -53,6 +53,9 @@ icons_dir = {
 
     'Batch Run' : {'img' : root_res_dir+'tools/bg_eraser_all.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
     'Batch Run_hover' : {'img' : root_res_dir+'tools/bg_eraser_all_hover.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
+
+    'Batch Run_' : {'img' : root_res_dir+'tools/stop.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
+    'Batch Run_hover_' : {'img' : root_res_dir+'tools/stop_hover.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
 
 
 
@@ -132,9 +135,9 @@ class CenterAlignTextImage:
 
 from PIL import Image, ImageDraw
 
-def draw_progress_bar(progress, width = 150, height = 5):
+def draw_progress_bar(progress, width = 150, height = 7):
 
-    img = Image.new('RGB', (width, height), color='gray')
+    img = Image.new('RGB', (width, height), color='#c5c3c6')
     draw = ImageDraw.Draw(img)
     
     # Draw background rectangle
@@ -144,7 +147,10 @@ def draw_progress_bar(progress, width = 150, height = 5):
     progress_width = int(progress)
     
     # Draw progress bar
-    draw.rectangle([0, 0, progress_width, height], fill='green')
+    # draw.rectangle([0, 0, progress_width, height], fill='#BDF000')
+    for x in range(progress_width+4):
+        if x%4 == 0:
+            draw.line([x,0,x-3,height],fill='#66b581',width=3)
 
     # img.show()
     return img

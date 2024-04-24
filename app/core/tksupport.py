@@ -78,30 +78,73 @@ class CanvasGif:
 
 class Tooltip:
     def __init__(self, widget, text):
-        print('***')
+        # print('***',widget,text)
         self.widget = widget
         self.text = text
         self.tooltip = None
-        self.widget.bind("<Enter>", self.enter)
-        self.widget.bind("<Leave>", self.leave)
-
-    def enter(self, event=None):
-        print('---')
-        x, y, _, _ = self.widget.bbox("insert")
-        x += self.widget.winfo_rootx() + 25
-        y += self.widget.winfo_rooty() + 25
+        # self.widget['command'] = self.a
+        # self.widget.bind("<Enter>", self.enter)
+        # self.widget.bind("<Leave>", self.leave)
+    
+    def a(self):
+        print("^^")
         
-        self.tooltip = Toplevel(self.widget)
-        self.tooltip.wm_overrideredirect(True)
-        self.tooltip.wm_geometry(f"+{x}+{y}")
-        
-        label = ttk.Label(self.tooltip, text=self.text, background="#ffffe0", relief="solid", borderwidth=1, font=("TkDefaultFont", 8))
-        label.pack(ipadx=1)
+    def enter(self):
+        self.leave_active = False
 
-    def leave(self, event=None):
-        if self.tooltip:
+        def own_appear(val=0):
+            if self.leave_active == True: return
+
+            if val == 3:
+                print('--->Entry')
+                x, y, _, _ = self.widget.bbox("insert")
+                x += self.widget.winfo_rootx() + 10
+                y += self.widget.winfo_rooty() + 25
+                
+                self.tooltip = Toplevel(self.widget)
+                self.tooltip.wm_overrideredirect(True)
+                self.tooltip.wm_geometry(f"+{x}+{y}")
+                # self.tooltip.lift()
+                # self.tooltip.focus_force()
+                self.tooltip.attributes("-topmost", True)
+                
+                label = ttk.Label(self.tooltip, text=self.text, background="#ffffe0", relief="solid", borderwidth=1, font=("TkDefaultFont", 8))
+                label.pack(ipadx=1)
+
+                own_destroy()
+
+
+            else:
+
+                val += 1
+                self.widget.after(500,own_appear, val)
+
+        
+
+        def own_destroy(val=0):
+            if self.leave_active == True: return
+
+            if val == 8:
+                self.tooltip.destroy()
+                # self.tooltip = None
+            val += 1
+            self.widget.after(500,own_destroy, val)
+
+        
+
+        own_appear()
+
+    def leave(self):
+        self.leave_active = True
+        print('--->Leave')
+        try: 
             self.tooltip.destroy()
-            self.tooltip = None
+        except:
+            print('not destrowy')
+    
+        # if self.tooltip != None:
+        #     self.tooltip.destroy()            
+        #     self.tooltip = None
 
 
 
