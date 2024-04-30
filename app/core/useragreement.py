@@ -5,7 +5,12 @@ from tkinter import messagebox
 from app.core.appvectors import *
 
 
-aggrements='''SOFTWARE LICENSE AGREEMENT
+
+with open('user_aggrements.txt', 'r') as RF:
+    aggrements = RF.read()
+RF.close()
+
+aggrements_ ='''SOFTWARE LICENSE AGREEMENT
 
 This Software License Agreement ("Agreement") is entered into by and between [Your Company Name], a company organized and existing under the laws of [Your Country/State], with its principal place of business at [Your Address] ("Licensor"), and the user of the software ("Licensee").
 
@@ -110,7 +115,16 @@ class UserAgreementWindow:
         self.top_level.title("User terms agreement")
     
         # Make the top-level window modal
+        # self.top_level.grab_set()
+
+
+        self.top_level.lift()
+        self.top_level.focus_force()
         self.top_level.grab_set()
+
+        
+        # self.top_level.grab_release()
+
         # Make a beep when the main window is selected while the top-level window is opening
         
         # def ring_bell(e):

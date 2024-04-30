@@ -3,7 +3,7 @@ from tkinter import ttk
 from tkinter import messagebox
 from tkinter import filedialog
 from threading import Thread
-import os,time
+import os,time,json
 from PIL import Image
 
 
@@ -18,6 +18,9 @@ class ImportFiles:
     
     def load_images_into_timeline(self):
         self.timeline_fun(self.selected_image_files)
+
+    def load_videos_into_timeline(self):
+        self.timeline_fun(self.selected_video_files,type='video')
 
     # Import Images
     def selectfiles(self , type='all' , initialdir = '.'):
@@ -44,31 +47,53 @@ class ImportFiles:
         print(filetypes)
 
 
-
+        #*checking last browse location
+        licence_checking_file = open('app/core/licence.json')
+        user_initialdir = json.load(licence_checking_file)
         
         
         if type == 'image':
             files = filedialog.askopenfilenames(
                 title= "Select image or video files" if type=='all' else  "Select image files" if type=='image' else 'Select video file',
                 filetypes=filetypes,
-                initialdir = initialdir,
+                initialdir = user_initialdir['last image loc'],
             )
 
 
             self.selected_image_files = [file for file in files if file.lower().endswith(('.jpg', '.jpeg', '.png' ,'.mp4' ,'.mov' ))]
+            
+            print('[1]\t',files[0])
+            print('[2]\t',os.path.abspath(files[0]))
+            print('[3]\t',os.path.abspath(files[0]).split('\\'))
+            print('[4]\t',os.path.abspath(files[0]).split('\\')[:-1])
+            print('[5]\t',"/".join(os.path.abspath(files[0]).split('\\')[:-1]))
+            user_initialdir['last image loc'] = "/".join(os.path.abspath(files[0]).split('\\')[:-1]) # Get the location of the image
+            
+            
             if len(self.selected_image_files) > 0:
                     Thread(target=self.load_images_into_timeline).start()
 
         elif type == 'video':
-            files = filedialog.askopenfilename(
+            files = filedialog.askopenfilenames(
                 title= "Select image or video files" if type=='all' else  "Select image files" if type=='image' else 'Select video file',
                 filetypes=filetypes,
-                initialdir = initialdir,
+                initialdir = user_initialdir['last video loc'],
             )
-                    
-            print('We will work on It')
+
+            user_initialdir['last video loc'] = "/".join(os.path.abspath(files[0]).split('\\')[:-1]) # Get the location of the video
+
+            # print('We will work on It')
+            self.selected_video_files = [file for file in files if file.lower().endswith(('.jpg', '.jpeg', '.png' ,'.mp4' ,'.mov' ))]
 
 
+            if len(self.selected_video_files) > 0:
+                    Thread(target=self.load_videos_into_timeline).start()
+
+
+        #*Save the location
+        with open('app/core/licence.json','w') as RF:
+            RF.write(json.dumps(user_initialdir, indent= 4))
+        RF.close()
 
 
     # Import Video
@@ -82,11 +107,30 @@ class ImportFiles:
         #     ("Image files", "*.png *.jpg *.jpeg"),
         #     ("Video files", "*.mp4 *.mov")
         # ]
+
+
+        #* checking last browse location
+        licence_checking_file = open('app/core/licence.json')
+        user_initialdir = json.load(licence_checking_file)
+
+
+
+
         folder_dir = filedialog.askdirectory(
             title="Select folder",
             # filetypes=filetypes,
-            initialdir = '.',
+            initialdir = user_initialdir['last folder loc'],
         )
+
+
+        user_initialdir['last folder loc'] = folder_dir
+
+
+
+        #* Save the location
+        with open('app/core/licence.json','w') as RF:
+            RF.write(json.dumps(user_initialdir, indent= 4))
+        RF.close()
         
         # Filter out non-image files
         # self.selected_image_files = [file for file in files if file.lower().endswith(('.jpg', '.jpeg', '.png'))]

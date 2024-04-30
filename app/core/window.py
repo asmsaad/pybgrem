@@ -97,7 +97,7 @@ class WindowConfiguration:
 
         if status.lower() == 'custom':            
             if min != None : self.window.minsize(self.min_window_dim[0], self.min_window_dim[1])
-            if max != None : self.window.maxsize(self.max_window_dim[0], self.max_window_dim[1])
+            # if max != None : self.window.maxsize(self.max_window_dim[0], self.max_window_dim[1])
         else:
             self.window.resizable(status, status)
     

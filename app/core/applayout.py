@@ -1,6 +1,9 @@
 from tkinter import *
 from threading import Thread
 
+from datetime import datetime,timedelta
+import shutil,os,getpass
+
 from app.core.window import WindowConfiguration
 from app.core.appvectors import *
 from app.core.appmenu import *
@@ -65,7 +68,7 @@ class InfoBar:
         self.progress_count.pack(side=LEFT)
 
         self.estimeted_time = Label(self.progress_frame, text=f'00m:00s:000ms', background='#f0f0f0', foreground='#474554',font=INFO_BAR_FONT , padx=10, border=0, borderwidth=0, highlightthickness=0)
-        self.estimeted_time.pack(side=LEFT)
+        # self.estimeted_time.pack(side=LEFT)
 
     def update_progressbar(self,progress):
 
@@ -262,11 +265,12 @@ class AppCanvas:
 
 
 class App:
-    def __init__(self) -> None:
+    def __init__(self, root) -> None:
+        self.root = root
         self.configure_window()
 
     def configure_window(self) -> None:
-        self.root = Tk()
+        
 
         self.window = WindowConfiguration(self.root)
         self.window.geometry(500, 500)
@@ -324,20 +328,62 @@ class App:
         APP_SAVE_FILES.pass_infobar(self.infobar) #!passing infobar to save
 
         
-        # messagebox.askquestion("Confirm","Are you sure?")
+
+
+
+        #! Disabled For a time being...
+        # # messagebox.askquestion("Confirm","Are you sure?")
         # useragreementwindow = UserAgreementWindow(self.root,aggrement_text= aggrements) #! for testing turend commented
-        #? add database to get data and verify
-        # useragreementwindow.show_first_time_trail_message = True #! for testing turend commented
+        # #? add database to get data and verify
+        # if not os.path.exists('app/core/licence.json'):
+        #     self.create_licence_log_file()
+        #     useragreementwindow.show_first_time_trail_message = True #! for testing turend commented
+        # else:
+        #     licence_checking_file = open('app/core/licence.json')
+        #     licence_data = json.load(licence_checking_file)
+        #     #update days with respect to licence key
+        #     if licence_data['key'] == "":
+        #         if compare_dates(add_five_days(licence_data['first']), str(datetime.now())):
+        #             self.appmenu.update_activation_date(f"{days_left(add_five_days(licence_data['first']),str(datetime.now()))} days left")
+        #         else:
+        #             self.appmenu.update_activation_date(f"Expired")
+        #             # licence popup
+
+                
+
+        #     else:
+        #         licenseactivation.reconstract_licence(licence_data['key'])
+        #     #Make forever loop to check the licence date
+        #     # def check_licence
+
+
+        #     #if licence expair3ed only available licence activation window
+
+
+        #* Update Trail Time on Every 5 minutes
+
         
+
+        def test(val=0):
+
+
+            if val == 3:
+                add_dependency()
+            else:
+                val += 1
+                self.root.after(100,test,val)
+
+        test()
+
         self.root.bind("<Configure>", self.on_canvas_resize)
-        self.root.mainloop()
+        
 
 
 
     def running_ongoing_action(self,type='ongoing',previous_menu_settings=None):
         print('.....', type)
         disable_menu = {
-            "File" : [ 'Import images' , 'Import video' , 'Import folder' , 'Save'],
+            "File" : [ 'Import images'  , 'Import folder' , 'Save'],
             "Effects" : ['Effect 1'],
         }
         if type == 'ongoing':
@@ -369,7 +415,17 @@ class App:
 
             
 
-
+    def create_licence_log_file(self):
+        with open('app/core/licence.json','w') as RF:
+            RF.write(json.dumps({
+                    "first" : str(datetime.now()),
+                    "last": "",
+                    "key": "",
+                    "last video loc": ".",
+                    "last image loc": ".",
+                    "last folder loc": ".",
+                }, indent= 4))
+        RF.close()
     
     def on_canvas_resize(self,event):
         window_width = self.root.winfo_width()
@@ -381,8 +437,83 @@ class App:
         # print("Canvas Height:", window_height)
 
 
+def add_five_days(input_datetime):
+    print('[0]')
+    # Convert input string to datetime object
+    input_datetime = datetime.strptime(input_datetime, '%Y-%m-%d %H:%M:%S.%f')
+    # Add three days
+    result_datetime = input_datetime + timedelta(days=5)
+    # Format and print the result
+    print(result_datetime.strftime('%Y-%m-%d %H:%M:%S.%f'))
+
+    return  result_datetime
+
+
+
+def compare_dates(datetime1, datetime2):
+    print('[1]')
+    # Convert input strings to datetime objects
+    datetime1 = datetime.strptime(str(datetime1), '%Y-%m-%d %H:%M:%S.%f')
+    datetime2 = datetime.strptime(str(datetime2), '%Y-%m-%d %H:%M:%S.%f')
+    # Compare the dates
+    print(datetime1, datetime2)
+    if datetime1 >= datetime2:
+        print("Okay")
+        return True
+    else:
+        print("Expired")
+        return False
+    
+def days_left(datetime1, datetime2):
+    print('[2]')
+    # Convert input strings to datetime objects
+    datetime1 = datetime.strptime(str(datetime1), '%Y-%m-%d %H:%M:%S.%f')
+    datetime2 = datetime.strptime(str(datetime2), '%Y-%m-%d %H:%M:%S.%f')
+    print(datetime1, datetime2)
+    # Check if datetime1 is less than or equal to datetime2
+    if datetime1 < datetime2:
+        print("False")
+        return False
+    # Calculate the difference in days
+    difference = datetime1 - datetime2
+    print(difference.days)
+    return difference.days
+
+
+
+def copy_folder(source_folder, destination_folder):
+    try:
+        # Copy the entire folder recursively
+        shutil.copytree(source_folder, destination_folder)
+        print("Folder copied successfully.")
+    except Exception as e:
+        print("Error:", e)
+
+def add_dependency():
+    destination_folder = os.path.abspath(f"C:/Users/{getpass.getuser()}/.u2net")
+    if not os.path.exists(destination_folder):
+        source_folder = os.path.abspath(".u2net")
+
+        print(source_folder)
+        print(destination_folder)
+        print('start_copying ...')
+        copy_folder(source_folder, destination_folder)
+        print('stop_copying ...')
+    
+
 if __name__ == '__manin__':
-    App()
+    root = Tk()
+    def a(val = 0 ):
+        
+
+        if val == 3:
+            App(root)
+        else:
+            val+= 1
+            root.after(10,a,val)
+
+    a()
+    root.mainloop()
 
 
 

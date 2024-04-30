@@ -81,10 +81,10 @@ class AppMenu:
 
                 'Import video' : {
                     'label' : 'Import Video',    
-                    'sec_label' : 'Ctrl + V', 
+                    'sec_label' : '', 
                     'underline' : 0, 
                     'command' : lambda : self.browse_video() , 
-                    'shortcut' : 'Control-v',  
+                    'shortcut' : '',  
                     'shortcut_command' : lambda e: self.browse_video_EL(e),
                     'state' : 'normal',
                 },
@@ -114,7 +114,7 @@ class AppMenu:
                     'sec_label' : 'Ctrl + Shift + S', 
                     'underline' : 0, 
                     'command' : lambda : do_something('File' +' >> '+ 'Open') , 
-                    'shortcut' : 'Control-s',  
+                    'shortcut' : '',  
                     'shortcut_command' : lambda e: self.browse_folder_EL(e), #!need to change
                     'state' : 'disable',
                 },
@@ -124,20 +124,20 @@ class AppMenu:
 
                 'History' : {
                     'label' : 'History',    
-                    'sec_label' : 'Ctrl + H', 
+                    'sec_label' : '', 
                     'underline' : 0, 
                     'command' : lambda : do_something('File' +' >> '+ 'Open') , 
-                    'shortcut' : 'Control-h',  
+                    'shortcut' : '',  
                     'shortcut_command' : lambda e: self.browse_folder_EL(e), #!need to change
                     'state' : 'disable',
                 },
 
                 'Exit' : {
                     'label' : 'Exit',    
-                    'sec_label' : 'Ctrl + F4', 
+                    'sec_label' : '', 
                     'underline' : 0, 
                     'command' : lambda : do_something('File' +' >> '+ 'Open') , 
-                    'shortcut' : 'Control-F4',  
+                    'shortcut' : '',  
                     'shortcut_command' : lambda e: self.browse_folder_EL(e), #!need to change
                     'state' : 'disable',
                 },
@@ -150,7 +150,7 @@ class AppMenu:
                     'sec_label' : 'Ctrl + C', 
                     'underline' : 0, 
                     'command' : lambda : do_something('Edit'+' >> '+ 'Open') , 
-                    'shortcut' : 'Control-C',  
+                    'shortcut' : '',  
                     'shortcut_command' : lambda e: self.browse_folder_EL(e), #!need to change
                     'state' : 'disable',
                 },
@@ -159,7 +159,7 @@ class AppMenu:
                     'sec_label' : 'Ctrl + X', 
                     'underline' : 0, 
                     'command' : lambda : do_something('Edit'+' >> '+ 'Open') , 
-                    'shortcut' : 'Control-x',  
+                    'shortcut' : '',  
                     'shortcut_command' : lambda e: self.browse_folder_EL(e), #!need to change
                     'state' : 'disable',
                 },
@@ -168,7 +168,7 @@ class AppMenu:
                     'sec_label' : 'Ctrl + V', 
                     'underline' : 0, 
                     'command' : lambda : do_something('Edit'+' >> '+ 'Open') , 
-                    'shortcut' : 'Control-v',  
+                    'shortcut' : '',  
                     'shortcut_command' : lambda e: self.browse_folder_EL(e), #!need to change
                     'state' : 'disable',
                 },
@@ -177,7 +177,7 @@ class AppMenu:
                     'sec_label' : 'Ctrl + y', 
                     'underline' : 0, 
                     'command' : lambda : do_something('Edit'+' >> '+ 'Open') , 
-                    'shortcut' : 'Control-y',  
+                    'shortcut' : '',  
                     'shortcut_command' : lambda e: self.browse_folder_EL(e), #!need to change
                     'state' : 'disable',
                 },
@@ -186,7 +186,7 @@ class AppMenu:
                     'sec_label' : 'Ctrl + Z', 
                     'underline' : 0, 
                     'command' : lambda : do_something('Edit'+' >> '+ 'Open') , 
-                    'shortcut' : 'Control-z',  
+                    'shortcut' : '',  
                     'shortcut_command' : lambda e: self.browse_folder_EL(e), #!need to change
                     'state' : 'disable',
                 },
@@ -199,7 +199,7 @@ class AppMenu:
                         'sec_label' : 'Ctrl + Shift + 1', 
                         'underline' : 0, 
                         'command' : lambda : do_something('Effects'+' >> '+ 'Open') , 
-                        'shortcut' : 'Control-C',  
+                        'shortcut' : '',  
                         'shortcut_command' : lambda e: self.browse_folder_EL(e), #!need to change
                         'state' : 'disable',
                     },
@@ -209,7 +209,7 @@ class AppMenu:
                         'sec_label' : 'Ctrl + Shift + 2', 
                         'underline' : 0, 
                         'command' : lambda : do_something('Effects'+' >> '+ 'Open') , 
-                        'shortcut' : 'Control-C',  
+                        'shortcut' : '',  
                         'shortcut_command' : lambda e: self.browse_folder_EL(e), #!need to change
                         'state' : 'disable',
                     },
@@ -222,7 +222,7 @@ class AppMenu:
                         'sec_label' : self.activation_days_info, 
                         'underline' : 0, 
                         'command' : lambda : do_something('Licence'+' >> '+ 'Open') , 
-                        'shortcut' : 'Control-C',  
+                        'shortcut' : '',  
                         'shortcut_command' : lambda e: self.browse_folder_EL(e), #!need to change 
                         'state' : 'disabled',
                     },
@@ -231,7 +231,7 @@ class AppMenu:
                         'sec_label' : self.activation_days_info , 
                         'underline' : 0, 
                         'command' : lambda : do_something('Licence'+' >> '+ 'Open') , 
-                        'shortcut' : 'Control-C',  
+                        'shortcut' : '',  
                         'shortcut_command' : lambda e: self.browse_folder_EL(e), #!need to change
                         'state' : 'disabled',
                     },
@@ -240,7 +240,7 @@ class AppMenu:
                         'sec_label' : '', 
                         'underline' : 0, 
                         'command' : lambda : self.add_new_licence_key() , 
-                        'shortcut' : 'Control-C',  
+                        'shortcut' : '',  
                         'shortcut_command' : lambda e: self.browse_folder_EL(e), #!need to change
                         'state' : 'normal',
                     },
@@ -251,10 +251,10 @@ class AppMenu:
                 "Help":{
                     'Shortcuts' : {
                         'label' : 'Shortcuts',    
-                        'sec_label' : 'Ctrl + C', 
+                        'sec_label' : '', 
                         'underline' : 0, 
                         'command' : lambda : do_something('Help'+' >> '+ 'Open') , 
-                        'shortcut' : 'Control-C',  
+                        'shortcut' : '',  
                         'shortcut_command' : lambda e: self.browse_folder_EL(e), #!need to change
                         'state' : 'disable',
                     },
@@ -264,7 +264,7 @@ class AppMenu:
                         'sec_label' : 'Ctrl + C', 
                         'underline' : 0, 
                         'command' : lambda : do_something('Help'+' >> '+ 'Open') , 
-                        'shortcut' : 'Control-C',  
+                        'shortcut' : '',  
                         'shortcut_command' : lambda e: self.browse_folder_EL(e), #!need to change
                         'state' : 'disable',
                     },
@@ -466,7 +466,7 @@ class AppMenu:
         self.working_menu = copy.deepcopy(self.base_menu)
         if self.is_running_trail:
             del self.working_menu['Licence']['Activated']
-            self.working_menu['Licence']['Activated']['Trail Period'] = self.activation_days_info
+            self.working_menu['Licence']['Trail Period']['sec_label'] = self.activation_days_info
             
         else:
             del self.working_menu['Licence']['Trail Period']

@@ -3,7 +3,7 @@ import hashlib
 from datetime import datetime
 from tkinter import *
 from tkinter import ttk
-import re
+import re,json
 try:
     from app.core.appvectors import *
 except:
@@ -114,6 +114,8 @@ def generaor(expaire_date,serial_number):
 
 
 class LicenceActivation:
+    previously_open_windwo = False
+
     def __init__(self,root) -> None:
         self.root = root
         pass
@@ -123,6 +125,8 @@ class LicenceActivation:
         ...
 
     def licence_key_activation_window(self):
+        self.previously_open_windwo = True
+        
 
         # Calculate the center coordinates of the root window
         self.root.update_idletasks()  # Update the window dimensions
@@ -147,7 +151,13 @@ class LicenceActivation:
         self.top_level.title("License Activation")
         self.top_level.resizable(False, False)
         # Make the top-level window modal
+        # self.top_level.grab_set()
+
+        self.top_level.lift()
+        self.top_level.focus_force()
         self.top_level.grab_set()
+
+        
         self.root.attributes('-topmost', True) 
         self.top_level.attributes('-topmost', True) 
         self.top_level.iconphoto(False, APP_VECT.get('appicon',(16,16)))
@@ -188,6 +198,17 @@ class LicenceActivation:
         if pattern.fullmatch(inputed_licence):
             print("Valid format")
             self.reconstract_licence(inputed_licence)
+
+            licence_checking_file = open('app/core/licence.json')
+            licence_data = json.load(licence_checking_file)
+            licence_data['key'] = inputed_licence
+            with open('app/core/licence.json','w') as RF:
+                RF.write(json.dumps(licence_data , indent= 4))
+            RF.close()
+
+
+
+
         else:
             print("Invalid format")
         
@@ -201,17 +222,17 @@ class LicenceActivation:
         message = b'@#$~~@#$'
 
 
-        date , serial , hash_val= ['','','']
+        self.date , serial , hash_val= ['','','']
    
 
         reconst = generatd_key.lower().split('-')
         for each_segment in reconst:
-            date += each_segment[0]
+            self.date += each_segment[0]
             serial += each_segment[-1]
             hash_val += each_segment[1:-1]
 
 
-        print(date)
+        print(self.date)
         print(serial)
         print(hash_val)
             
@@ -219,24 +240,28 @@ class LicenceActivation:
         calculated_hmac_hash = hmac.new(secret_key, message, hashlib.sha1).hexdigest()[:32]
         if provided_hmac_hash == calculated_hmac_hash:
 
-            #! if self.days_left(date)
+            #! if self.days_left(self.date)
             
             print("Message is authentic.")
-            self.licence_key_entry['state'] = DISABLED
-            self.check_licence_key_btn['state'] = DISABLED
-            self.check_licence_key_btn['text'] = 'Activated'
+            if self.previously_open_windwo == True:
+                self.licence_key_entry['state'] = DISABLED
+                self.check_licence_key_btn['state'] = DISABLED
+                self.check_licence_key_btn['text'] = 'Activated'
 
             print('[1] -- >> >')
             self.appmenu.is_running_trail = False
-            self.appmenu.update_activation_date(f'{self.days_left(date)} days left')
-            #!need to add a loader
-            self.top_level.destroy()
+            self.appmenu.update_activation_date(f'{self.days_left(self.date)} days left')
+            
+            if self.previously_open_windwo == True:
+                #!need to add a loader
+                self.top_level.destroy()
             # self.root.unbind("<Button-1>")
 
         else:
-            self.licence_key_entry['state'] = NORMAL
-            self.check_licence_key_btn['state'] = NORMAL
-            self.check_licence_key_btn['text'] = 'Activate'
+            if self.previously_open_windwo == True:
+                self.licence_key_entry['state'] = NORMAL
+                self.check_licence_key_btn['state'] = NORMAL
+                self.check_licence_key_btn['text'] = 'Activate'
             print("Message is not authentic.")
 
     
@@ -289,8 +314,7 @@ if __name__ == '__main__':
     # root.geometry('600x600')
     # root.mainloop()
 
-
+    #* c
     # 395660-01B840-10B950-24FB40-297FF0-02B350-271C05-4FCAE6
     # 395660-01B840-10B950-24FB40-297FF0-02B350-371C05-0FCAE6
-
     generatd_key = generaor('30/12/2030','56')

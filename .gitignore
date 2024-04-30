@@ -1,8 +1,11 @@
 __pycache__/
 venv/
 output/
+exe_files/
 Input/
 Input_bgrem/
+u2net/
 .u2net/
 test*.py
 gitpush.py
+# ..........
