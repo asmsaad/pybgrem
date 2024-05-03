@@ -1,3 +1,21 @@
+"""
+╔══════════════════════════════════════════════════════════╗
+║                    apptimeline.py                        ║
+╚══════════════════════════════════════════════════════════╝
+┌──────────────────────────────────────────────────────────┐
+│                          Author                          │
+├──────┬────────────────────┬───────┬──────────────────────┤
+│ Name │ A S M Saad         │ Email │ asmsaad3@gmail.com   │
+├──────┼────────────────────┼───────┼──────────────────────┤
+│ Date │ April 10, 2023     │ Github│ asmsaad/pybgrem      │
+├──────┴────────────────────┴───────┴──────────────────────┤
+│                       Description                        │
+├──────────────────────────────────────────────────────────┤
+│                                                          │
+│                                                          │
+└──────────────────────────────────────────────────────────┘
+"""
+
 from tkinter import *
 from tkinter import ttk
 from app.core.appsettings import *
@@ -161,129 +179,132 @@ class AppTimeline:
 
 
     def scrollable_timeline(self,selected_image,type='image'):
-        if type == 'video':
-            selected_video_files = selected_image
-            print('**',selected_image)
-            
+        # if type == 'video':
+        #     selected_video_files = selected_image
+        #     print('**',selected_image)
 
-
-
-        # self.modified_images = {}           #* Storing images for saving.
-        # self.timeline_widgets = {}
-
-        # self.infobar.show_progressbar()
-        # self.infobar.initiate_progressbar(len(selected_image),title = 'Importing selected image')
-
-        # print(selected_image)
-
-        # for index,img_path in enumerate(selected_image):
-        #     self.timeline_widgets[img_path] = {}
-        #     self.timeline_widgets[img_path]['loc'] = ''
-        #     self.timeline_widgets[img_path]['name'] = ''
-        #     self.timeline_widgets[img_path]['settings'] = ''
-        #     self.timeline_widgets[img_path]['widgets'] = {}
-        #     self.timeline_widgets[img_path]['widgets']['canvas'] = {}
-            
-        #     self.timeline_widgets[img_path]['widgets']['canvas']['base'] = Canvas(self.timeline_canvas, bg='orange' if index%2 == 0 else 'yellow', width=TIMELINE_DISPLAY_IMAGE_WIDTH, height=TIMELINE_DISPLAY_IMAGE_HEIGHT ,border=0,borderwidth=0,highlightthickness=0)
-        #     self.timeline_canvas.create_window(index*(TIMELINE_DISPLAY_IMAGE_HEIGHT), 0, anchor='nw', window=self.timeline_widgets[img_path]['widgets']['canvas']['base'])
-        #     # self.timeline_widgets[img_path]['widgets']['canvas']['base'].pack_propagate(True)
-            
-            
-            
-        #     # self.timeline_widgets[img_path]['widgets']['canvas']['base']['bg'] = 'white'
-        #     # self.timeline_widgets[img_path]['widgets']['canvas']['base'].bind_all('<Leave>', lambda e , canvas_ = self.timeline_widgets[img_path]['widgets']['canvas']['base']  : self.mouse_hover(e,'Leave',canvas_))
-
-
-        #     #Original Image
-        #     # self.timeline_widgets[img_path]['widgets']['canvas']['image'] =  Image.open(base_loc+'/'+img_path) 
-        #     self.timeline_widgets[img_path]['widgets']['canvas']['image'] =  {}
-        #     self.timeline_widgets[img_path]['widgets']['canvas']['image']['original'] =  Image.open(img_path) 
-        #     self.timeline_widgets[img_path]['widgets']['canvas']['image']['processed'] =  '' 
-
-        #     self.timeline_widgets[img_path]['widgets']['canvas']['original'] = Canvas(self.timeline_widgets[img_path]['widgets']['canvas']['base'], bg='white' if index%2 == 0 else 'white', width=TIMELINE_DISPLAY_IMAGE_WIDTH, height=int(TIMELINE_DISPLAY_IMAGE_HEIGHT/2) ,border=0,borderwidth=0,highlightthickness=0)
-        #     self.timeline_widgets[img_path]['widgets']['canvas']['original'].pack()
-        #     self.timeline_widgets[img_path]['widgets']['canvas']['original'].pack_propagate(False)
-        #     # self.timeline_widgets[img_path]['widgets']['canvas']['original'].bind('<Button-1>', lambda e,  image =  self.timeline_widgets[img_path]['widgets']['canvas']['image'] : self.update_canvas_img(e, image))
-
-        #     #original image
-        #     # Label(self.timeline_widgets[img_path]['widgets']['canvas']['original'] ,border=0,borderwidth=0,highlightthickness=0)
-        #     self.place_image_center(self.timeline_widgets[img_path]['widgets']['canvas']['original'],image_path=img_path)
-            
-            
-        #     # Processed Image
-        #     self.timeline_widgets[img_path]['widgets']['canvas']['processed'] = Canvas(self.timeline_widgets[img_path]['widgets']['canvas']['base'], bg='white' if index % 2 == 0 else 'white', width=TIMELINE_DISPLAY_IMAGE_WIDTH, height=int(TIMELINE_DISPLAY_IMAGE_HEIGHT / 2), bd=0, borderwidth=0, highlightthickness=0)
-
-        #     self.timeline_widgets[img_path]['widgets']['canvas']['processed'].pack_propagate(False)
-        #     self.timeline_widgets[img_path]['widgets']['canvas']['processed'].pack()
-        #     # self.place_image_center(self.timeline_widgets[img_path]['widgets']['canvas']['processed'],image_path=img_path)
-        #     self.place_image_center(self.timeline_widgets[img_path]['widgets']['canvas']['processed'],image=Image.open("app/res/icons/timeline/remove_able.png"))
-            
-        #     #todo Text_draw
-        #     self.timeline_widgets[img_path]['widgets']['canvas']['processed_info_text'] = self.timeline_widgets[img_path]['widgets']['canvas']['processed'].create_text(int(TIMELINE_DISPLAY_IMAGE_WIDTH/2), int(TIMELINE_DISPLAY_IMAGE_HEIGHT/2) - 6 , text="Click to clear out", font=("Arial", 8, "normal") , fill='gray' ,state= "normal" if index == 0 else "hidden")
-
-
-        #     ttk.Separator(self.timeline_widgets[img_path]['widgets']['canvas']['base'], orient='horizontal').place(relx=0, y=62, width=TIMELINE_DISPLAY_IMAGE_WIDTH , height=1)
-        #     # ttk.Separator(self.timeline_widgets[img_path]['widgets']['canvas']['base'], orient='vertical').place(relx=TIMELINE_DISPLAY_IMAGE_WIDTH-10, y=0, width=TIMELINE_DISPLAY_IMAGE_HEIGHT , height=1)
-        #     ttk.Separator(self.timeline_widgets[img_path]['widgets']['canvas']['base'], orient='vertical').place(x=TIMELINE_DISPLAY_IMAGE_WIDTH-1, y=0, width=1 , height=TIMELINE_DISPLAY_IMAGE_HEIGHT)
-
-
+        #     # Get thumbnail from video.
 
             
 
 
-        #     self.timeline_widgets[img_path]['widgets']['canvas']['processed'].bind('<Enter>',
-        #                                                                            lambda e,
-        #     img_path = img_path:
-        #     self.on_enter_process_canvas(e,img_path)  )
-        #     self.timeline_widgets[img_path]['widgets']['canvas']['processed'].bind('<Leave>',
-        #                                                                            lambda e,
-        #     img_path = img_path:
-        #     self.on_leave_process_canvas(e,img_path)  )
+
+        self.modified_images = {}           #* Storing images for saving.
+        self.timeline_widgets = {}
+
+        self.infobar.show_progressbar()
+        self.infobar.initiate_progressbar(len(selected_image),title = 'Importing selected image')
+
+        print(selected_image)
+
+        for index,img_path in enumerate(selected_image):
+            self.timeline_widgets[img_path] = {}
+            self.timeline_widgets[img_path]['loc'] = ''
+            self.timeline_widgets[img_path]['name'] = ''
+            self.timeline_widgets[img_path]['settings'] = ''
+            self.timeline_widgets[img_path]['widgets'] = {}
+            self.timeline_widgets[img_path]['widgets']['canvas'] = {}
+            
+            self.timeline_widgets[img_path]['widgets']['canvas']['base'] = Canvas(self.timeline_canvas, bg='orange' if index%2 == 0 else 'yellow', width=TIMELINE_DISPLAY_IMAGE_WIDTH, height=TIMELINE_DISPLAY_IMAGE_HEIGHT ,border=0,borderwidth=0,highlightthickness=0)
+            self.timeline_canvas.create_window(index*(TIMELINE_DISPLAY_IMAGE_HEIGHT), 0, anchor='nw', window=self.timeline_widgets[img_path]['widgets']['canvas']['base'])
+            # self.timeline_widgets[img_path]['widgets']['canvas']['base'].pack_propagate(True)
+            
+            
+            
+            # self.timeline_widgets[img_path]['widgets']['canvas']['base']['bg'] = 'white'
+            # self.timeline_widgets[img_path]['widgets']['canvas']['base'].bind_all('<Leave>', lambda e , canvas_ = self.timeline_widgets[img_path]['widgets']['canvas']['base']  : self.mouse_hover(e,'Leave',canvas_))
 
 
-        #     self.timeline_widgets[img_path]['widgets']['canvas']['base'].bind('<Enter>', 
-        #                                                                       lambda e,
-        #     base_img_canvas  = self.timeline_widgets[img_path]['widgets']['canvas']['base'],
-        #     original_img_canvas  = self.timeline_widgets[img_path]['widgets']['canvas']['original'],
-        #     modified_img_canvas  = self.timeline_widgets[img_path]['widgets']['canvas']['processed'] :
-        #     self.timeline_enter(e,base_img_canvas,original_img_canvas,modified_img_canvas) )
+            #Original Image
+            # self.timeline_widgets[img_path]['widgets']['canvas']['image'] =  Image.open(base_loc+'/'+img_path) 
+            self.timeline_widgets[img_path]['widgets']['canvas']['image'] =  {}
+            self.timeline_widgets[img_path]['widgets']['canvas']['image']['original'] =  Image.open(img_path) 
+            self.timeline_widgets[img_path]['widgets']['canvas']['image']['processed'] =  '' 
+
+            self.timeline_widgets[img_path]['widgets']['canvas']['original'] = Canvas(self.timeline_widgets[img_path]['widgets']['canvas']['base'], bg='white' if index%2 == 0 else 'white', width=TIMELINE_DISPLAY_IMAGE_WIDTH, height=int(TIMELINE_DISPLAY_IMAGE_HEIGHT/2) ,border=0,borderwidth=0,highlightthickness=0)
+            self.timeline_widgets[img_path]['widgets']['canvas']['original'].pack()
+            self.timeline_widgets[img_path]['widgets']['canvas']['original'].pack_propagate(False)
+            # self.timeline_widgets[img_path]['widgets']['canvas']['original'].bind('<Button-1>', lambda e,  image =  self.timeline_widgets[img_path]['widgets']['canvas']['image'] : self.update_canvas_img(e, image))
+
+            #original image
+            # Label(self.timeline_widgets[img_path]['widgets']['canvas']['original'] ,border=0,borderwidth=0,highlightthickness=0)
+            self.place_image_center(self.timeline_widgets[img_path]['widgets']['canvas']['original'],image_path=img_path)
+            
+            
+            # Processed Image
+            self.timeline_widgets[img_path]['widgets']['canvas']['processed'] = Canvas(self.timeline_widgets[img_path]['widgets']['canvas']['base'], bg='white' if index % 2 == 0 else 'white', width=TIMELINE_DISPLAY_IMAGE_WIDTH, height=int(TIMELINE_DISPLAY_IMAGE_HEIGHT / 2), bd=0, borderwidth=0, highlightthickness=0)
+
+            self.timeline_widgets[img_path]['widgets']['canvas']['processed'].pack_propagate(False)
+            self.timeline_widgets[img_path]['widgets']['canvas']['processed'].pack()
+            # self.place_image_center(self.timeline_widgets[img_path]['widgets']['canvas']['processed'],image_path=img_path)
+            self.place_image_center(self.timeline_widgets[img_path]['widgets']['canvas']['processed'],image=Image.open("app/res/icons/timeline/remove_able.png"))
+            
+            #todo Text_draw
+            self.timeline_widgets[img_path]['widgets']['canvas']['processed_info_text'] = self.timeline_widgets[img_path]['widgets']['canvas']['processed'].create_text(int(TIMELINE_DISPLAY_IMAGE_WIDTH/2), int(TIMELINE_DISPLAY_IMAGE_HEIGHT/2) - 6 , text="Click to clear out", font=("Arial", 8, "normal") , fill='gray' ,state= "normal" if index == 0 else "hidden")
+
+
+            ttk.Separator(self.timeline_widgets[img_path]['widgets']['canvas']['base'], orient='horizontal').place(relx=0, y=62, width=TIMELINE_DISPLAY_IMAGE_WIDTH , height=1)
+            # ttk.Separator(self.timeline_widgets[img_path]['widgets']['canvas']['base'], orient='vertical').place(relx=TIMELINE_DISPLAY_IMAGE_WIDTH-10, y=0, width=TIMELINE_DISPLAY_IMAGE_HEIGHT , height=1)
+            ttk.Separator(self.timeline_widgets[img_path]['widgets']['canvas']['base'], orient='vertical').place(x=TIMELINE_DISPLAY_IMAGE_WIDTH-1, y=0, width=1 , height=TIMELINE_DISPLAY_IMAGE_HEIGHT)
+
+
 
             
-        #     self.timeline_widgets[img_path]['widgets']['canvas']['base'].bind('<Leave>', 
-        #                                                                       lambda e,
-        #     base_img_canvas  = self.timeline_widgets[img_path]['widgets']['canvas']['base'],
-        #     original_img_canvas  = self.timeline_widgets[img_path]['widgets']['canvas']['original'],
-        #     modified_img_canvas  = self.timeline_widgets[img_path]['widgets']['canvas']['processed'] :
-        #     self.timeline_leave(e,base_img_canvas,original_img_canvas,modified_img_canvas) )
+
+
+            self.timeline_widgets[img_path]['widgets']['canvas']['processed'].bind('<Enter>',
+                                                                                   lambda e,
+            img_path = img_path:
+            self.on_enter_process_canvas(e,img_path)  )
+            self.timeline_widgets[img_path]['widgets']['canvas']['processed'].bind('<Leave>',
+                                                                                   lambda e,
+            img_path = img_path:
+            self.on_leave_process_canvas(e,img_path)  )
+
+
+            self.timeline_widgets[img_path]['widgets']['canvas']['base'].bind('<Enter>', 
+                                                                              lambda e,
+            base_img_canvas  = self.timeline_widgets[img_path]['widgets']['canvas']['base'],
+            original_img_canvas  = self.timeline_widgets[img_path]['widgets']['canvas']['original'],
+            modified_img_canvas  = self.timeline_widgets[img_path]['widgets']['canvas']['processed'] :
+            self.timeline_enter(e,base_img_canvas,original_img_canvas,modified_img_canvas) )
 
             
-        #     self.timeline_widgets[img_path]['widgets']['canvas']['original'].bind('<Button-1>', 
-        #                                                                       lambda e,
-        #     clicked_on = 'original',
-        #     img_path= img_path,
-        #     image = self.timeline_widgets[img_path]['widgets']['canvas']['image'],                                                                  
-        #     base_img_canvas  = self.timeline_widgets[img_path]['widgets']['canvas']['base'],
-        #     original_img_canvas  = self.timeline_widgets[img_path]['widgets']['canvas']['original'],
-        #     modified_img_canvas  = self.timeline_widgets[img_path]['widgets']['canvas']['processed'] :
-        #     self.timeline_image_click(e, image, clicked_on, base_img_canvas,original_img_canvas,modified_img_canvas, img_path=img_path) )
+            self.timeline_widgets[img_path]['widgets']['canvas']['base'].bind('<Leave>', 
+                                                                              lambda e,
+            base_img_canvas  = self.timeline_widgets[img_path]['widgets']['canvas']['base'],
+            original_img_canvas  = self.timeline_widgets[img_path]['widgets']['canvas']['original'],
+            modified_img_canvas  = self.timeline_widgets[img_path]['widgets']['canvas']['processed'] :
+            self.timeline_leave(e,base_img_canvas,original_img_canvas,modified_img_canvas) )
 
-        #     self.timeline_widgets[img_path]['widgets']['canvas']['processed'].bind('<Button-1>', 
-        #                                                                       lambda e,
-        #     clicked_on = 'processed',
-        #     img_path= img_path, 
-        #     image = self.timeline_widgets[img_path]['widgets']['canvas']['image'],                                                                 
-        #     base_img_canvas  = self.timeline_widgets[img_path]['widgets']['canvas']['base'],
-        #     original_img_canvas  = self.timeline_widgets[img_path]['widgets']['canvas']['original'],
-        #     modified_img_canvas  = self.timeline_widgets[img_path]['widgets']['canvas']['processed'] :
-        #     self.timeline_image_click(e,image , clicked_on, base_img_canvas,original_img_canvas,modified_img_canvas, img_path=img_path) )
+            
+            self.timeline_widgets[img_path]['widgets']['canvas']['original'].bind('<Button-1>', 
+                                                                              lambda e,
+            clicked_on = 'original',
+            img_path= img_path,
+            image = self.timeline_widgets[img_path]['widgets']['canvas']['image'],                                                                  
+            base_img_canvas  = self.timeline_widgets[img_path]['widgets']['canvas']['base'],
+            original_img_canvas  = self.timeline_widgets[img_path]['widgets']['canvas']['original'],
+            modified_img_canvas  = self.timeline_widgets[img_path]['widgets']['canvas']['processed'] :
+            self.timeline_image_click(e, image, clicked_on, base_img_canvas,original_img_canvas,modified_img_canvas, img_path=img_path) )
+
+            self.timeline_widgets[img_path]['widgets']['canvas']['processed'].bind('<Button-1>', 
+                                                                              lambda e,
+            clicked_on = 'processed',
+            img_path= img_path, 
+            image = self.timeline_widgets[img_path]['widgets']['canvas']['image'],                                                                 
+            base_img_canvas  = self.timeline_widgets[img_path]['widgets']['canvas']['base'],
+            original_img_canvas  = self.timeline_widgets[img_path]['widgets']['canvas']['original'],
+            modified_img_canvas  = self.timeline_widgets[img_path]['widgets']['canvas']['processed'] :
+            self.timeline_image_click(e,image , clicked_on, base_img_canvas,original_img_canvas,modified_img_canvas, img_path=img_path) )
 
             
 
         
-        #     self.infobar.update_progressbar(index+1)
+            self.infobar.update_progressbar(index+1)
 
-        # time.sleep(5)
-        # self.infobar.hide_progressbar()
+        time.sleep(5)
+        self.infobar.hide_progressbar()
 
     
     def resize_image(self,image,margin=5):

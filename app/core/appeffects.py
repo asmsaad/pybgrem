@@ -15,8 +15,8 @@ class ImageHoverEffect:
 
         self.tooltip = tooltip
         
-        self.widget_name.bind('<Enter>' , self.on_mouse_enter_EL) 
-        self.widget_name.bind('<Leave>' , self.on_mouse_leave_EL) 
+        self.widget_name.bind('<Enter>' , lambda e : self.on_mouse_enter_EL(e)) 
+        self.widget_name.bind('<Leave>' , lambda e : self.on_mouse_leave_EL(e)) 
 
     def update(self,default_img:object=None, hover_img:object=None) -> None:
         if default_img != None: 
@@ -26,7 +26,17 @@ class ImageHoverEffect:
 
         self.on_mouse_enter()
 
-        
+    def update_without_effect(self,default_img:object=None, hover_img:object=None) -> None:
+        if default_img != None: 
+            self.default_img = default_img
+        if hover_img != None: 
+            self.hover_img = hover_img
+
+        self.widget_name['image'] = self.default_img
+        self.widget_name.image = self.default_img
+
+
+
 
     def on_mouse_enter_EL(self,e):
         print('Enter')

@@ -144,7 +144,7 @@ class AppMenuIcon:
 
 
 
-
+        
         self.base_frame = Frame(self.root,background='#f0f0f0',height=24 ,border=0,borderwidth=0,highlightthickness=0,bd=0)
         self.base_frame.pack(expand=True,fill=X)
 
@@ -157,7 +157,7 @@ class AppMenuIcon:
                     "New": {'dispaly-text': None,'command': None, 'state' : 'disable'}, 
                     "Import images":{'dispaly-text': None,'command': lambda : self.APP_IMPORT_FILES.selectfiles(type='image') , 'state' : 'normal'}, 
                     "Import folder": {'dispaly-text': None,'command': lambda :  self.APP_IMPORT_FILES.folder(), 'state' : 'normal'}, 
-                    "Import video": {'dispaly-text': None,'command': lambda :  self.APP_IMPORT_FILES.selectfiles(type='video'), 'state' : 'normal'},  
+                    "Import video": {'dispaly-text': None,'command': lambda :  self.APP_IMPORT_FILES.selectfiles(type='video'), 'state' : 'disable'},  
                     "Save": {'dispaly-text': None,'command': lambda : self.APP_SAVE_FILES.save_at_default_folder_Thread(), 'state' : 'normal'}, 
                     "Save as": {'dispaly-text': None,'command': None, 'state' : 'disable'}, 
                 },
@@ -182,11 +182,11 @@ class AppMenuIcon:
         self.tool_define()
 
         
-        self.menu_bar_start_img = APP_VECT.get('start_tool_menu',(24,24))
+        self.menu_bar_start_img = APP_VECT.get('start_tool_menu',(20,20))
         for index, each_section in enumerate(self.tools):
             self.tools_widgets[each_section] = {}
             Label(self.base_frame,padx=0 if index == 0 else 3,pady=2 , background='#f0f0f0').pack(side=LEFT)
-            self.tools_widgets[each_section]['menu_bar_lbl'] = Label(self.base_frame,background='#f0f0f0',height=24,width=10,border=0,borderwidth=0,highlightthickness=0)
+            self.tools_widgets[each_section]['menu_bar_lbl'] = Label(self.base_frame,background='#f0f0f0',height=20,width=10,border=0,borderwidth=0,highlightthickness=0)
             self.tools_widgets[each_section]['menu_bar_lbl']['image'] = self.menu_bar_start_img
             self.tools_widgets[each_section]['menu_bar_lbl'].image = self.menu_bar_start_img
             self.tools_widgets[each_section]['menu_bar_lbl'].pack(side=LEFT)
@@ -194,16 +194,21 @@ class AppMenuIcon:
 
             for each_tool in self.tools[each_section]:
                 self.tools_widgets[each_section][each_tool] = {}
-                self.tools_widgets[each_section][each_tool]['image'] = {'default': APP_VECT.get(each_tool,(24,24)) , 'hover': APP_VECT.get(each_tool+'_hover',(24,24))}
-                self.tools_widgets[each_section][each_tool]['button'] = Button(self.base_frame,background='#f0f0f0',activebackground='#f0f0f0',height=24,width=28,border=0,borderwidth=0,highlightthickness=0, state=self.tools[each_section][each_tool]['state'])
+                self.tools_widgets[each_section][each_tool]['state'] = self.tools[each_section][each_tool]['state']
+                self.tools_widgets[each_section][each_tool]['image'] = {'default': APP_VECT.get(each_tool,(20,20)) , 'hover': APP_VECT.get(each_tool+'_hover',(20,20)) , 'disabled': APP_VECT.get(each_tool+'_disabled',(20,20))}
+                self.tools_widgets[each_section][each_tool]['button'] = Button(self.base_frame,background='#f0f0f0',activebackground='#f0f0f0',height=20,width=28,border=0,borderwidth=0,highlightthickness=0)
                 self.tools_widgets[each_section][each_tool]['button']['image'] = self.tools_widgets[each_section][each_tool]['image']['default']
                 self.tools_widgets[each_section][each_tool]['button'].image = self.tools_widgets[each_section][each_tool]['image']['default']
-                self.tools_widgets[each_section][each_tool]['button'].pack(side=LEFT)
+                self.tools_widgets[each_section][each_tool]['button'].pack(side=LEFT, anchor=NW)
                 # Tooltip(self.tools_widgets[each_section][each_tool]['button'],each_tool)
                 self.tools_widgets[each_section][each_tool]['tooltip'] = Tooltip(self.tools_widgets[each_section][each_tool]['button'],each_tool)
-                ImageHoverEffect(self.tools_widgets[each_section][each_tool]['button'], (self.tools_widgets[each_section][each_tool]['image']['default'], self.tools_widgets[each_section][each_tool]['image']['hover'] ) , tooltip = self.tools_widgets[each_section][each_tool]['tooltip'])
-
-                self.tools_widgets[each_section][each_tool]['button']['command'] = self.tools[each_section][each_tool]['command']
+                self.tools_widgets[each_section][each_tool]['hovereffect'] = ImageHoverEffect(self.tools_widgets[each_section][each_tool]['button'], (self.tools_widgets[each_section][each_tool]['image']['default'], self.tools_widgets[each_section][each_tool]['image']['hover'] ) , tooltip = self.tools_widgets[each_section][each_tool]['tooltip'])
+                
+                if self.tools_widgets[each_section][each_tool]['state'] == 'disable':
+                    self.tools_widgets[each_section][each_tool]['hovereffect'].update_without_effect(default_img=self.tools_widgets[each_section][each_tool]['image']['disabled'],hover_img=self.tools_widgets[each_section][each_tool]['image']['disabled'])
+                    self.tools_widgets[each_section][each_tool]['button']['relief'] = SUNKEN
+                else:
+                    self.tools_widgets[each_section][each_tool]['button']['command'] = self.tools[each_section][each_tool]['command']
                 
                 # Tooltip(self.tools_widgets[each_section][each_tool]['button'],each_tool)
 

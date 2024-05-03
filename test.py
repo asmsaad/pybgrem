@@ -73,43 +73,41 @@
 #todo check thambine
 import ffmpeg
 from PIL import Image
-from io import BytesIO
 
-def extract_thumbnail_as_pil(video_path, time='00:00:01'):
+
+def extract_thumbnail(video_path, thumbnail_path, time='00:00:01', size='320x240'):
     """
-    Extract a thumbnail image from a video using ffmpeg-python and return it as a PIL Image object.
+    Extract a thumbnail image from a video using ffmpeg-python.
 
     Args:
         video_path (str): Path to the input video file.
+        thumbnail_path (str): Path to save the extracted thumbnail image.
         time (str): Time in HH:MM:SS format where to extract the thumbnail from (default is 1 second).
-    
-    Returns:
-        PIL.Image.Image: The extracted thumbnail image.
+        size (str): Size of the thumbnail image in WxH format (default is 320x240).
     """
-    try:
-        # Run FFmpeg command to extract thumbnail as bytes
-        out, err = (
-            ffmpeg
-            .input(video_path, ss=time)
-            .output('pipe:', format='rawvideo', vframes=1)
-            .run(capture_stdout=True, capture_stderr=True)
-        )
-        
-        if err:
-            print("FFmpeg stderr:", err.decode('utf-8'))
-            return None
+    (
+        ffmpeg
+        .input(video_path, ss=time)
+        .output(thumbnail_path, vframes=1)
+        .run(overwrite_output=True)
+    )
+    print("Thumbnail extracted successfully!")
 
-        # Convert raw bytes to PIL Image
-        img = Image.frombytes('RGB', (ffmpeg.input(video_path).width, ffmpeg.input(video_path).height), out)
-        
-        return img
-    except ffmpeg.Error as e:
-        print("FFmpeg error:", e.stderr.decode('utf-8'))
-        return None
 
-# Example usage:
+
+
+# Example usage
 video_path = 'input/video.mp4'
-thumbnail_pil = extract_thumbnail_as_pil(video_path)
-if thumbnail_pil:
-    thumbnail_pil.show()  # Display the thumbnail image
+output_path = 'thumbnail.jpg'
+extract_thumbnail(video_path, output_path)
+
+# Load the generated thumbnail image using Pillow
+thumbnail_image = Image.open(output_path)
+thumbnail_image.show()  # Display the thumbnail image
+
+
+
+
+
+
 

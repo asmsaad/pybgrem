@@ -13,49 +13,63 @@ icons_dir = {
 
     'New' : {'img' : root_res_dir+'tools/new_canvas.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
     'New_hover' : {'img' : root_res_dir+'tools/new_canvas_hover.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
+    'New_disabled' : {'img' : root_res_dir+'tools/new_canvas_disabled.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
 
     'Import images' : {'img' : root_res_dir+'tools/add_image.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
     'Import images_hover' : {'img' : root_res_dir+'tools/add_image_hover.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
+    'Import images_disabled' : {'img' : root_res_dir+'tools/add_image_disabled.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
 
     'Import video' : {'img' : root_res_dir+'tools/add_video.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
     'Import video_hover' : {'img' : root_res_dir+'tools/add_video_hover.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
+    'Import video_disabled' : {'img' : root_res_dir+'tools/add_video_disabled.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
 
     'Import folder' : {'img' : root_res_dir+'tools/folder.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
     'Import folder_hover' : {'img' : root_res_dir+'tools/folder_hover.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
+    'Import folder_disabled' : {'img' : root_res_dir+'tools/folder_disabled.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
 
     'Save' : {'img' : root_res_dir+'tools/save.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
     'Save_hover' : {'img' : root_res_dir+'tools/save_hover.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
+    'Save_disabled' : {'img' : root_res_dir+'tools/save_disabled.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
 
     'Save as' : {'img' : root_res_dir+'tools/save_as.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
     'Save as_hover' : {'img' : root_res_dir+'tools/save_as_hover.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
+    'Save as_disabled' : {'img' : root_res_dir+'tools/save_as_disabled.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
 
 
     'Cut' : {'img' : root_res_dir+'tools/cut.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
-    'Cut_hover' : {'img' : root_res_dir+'tools/cut.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
+    'Cut_hover' : {'img' : root_res_dir+'tools/cut_hover.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
+    'Cut_disabled' : {'img' : root_res_dir+'tools/cut_disabled.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
 
     'Copy' : {'img' : root_res_dir+'tools/copy.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
     'Copy_hover' : {'img' : root_res_dir+'tools/copy_hover.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
+    'Copy_disabled' : {'img' : root_res_dir+'tools/copy_disabled.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
 
     'Paste' : {'img' : root_res_dir+'tools/paste.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
-    'Paste_hover' : {'img' : root_res_dir+'tools/paste.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
+    'Paste_hover' : {'img' : root_res_dir+'tools/paste_hover.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
+    'Paste_disabled' : {'img' : root_res_dir+'tools/paste_disabled.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
 
 
 
     'Redo' : {'img' : root_res_dir+'tools/redo.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
-    'Redo_hover' : {'img' : root_res_dir+'tools/redo.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
+    'Redo_hover' : {'img' : root_res_dir+'tools/redo_hover.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
+    'Redo_disabled' : {'img' : root_res_dir+'tools/redo_disabled.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
 
     'Undo' : {'img' : root_res_dir+'tools/undo.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
-    'Undo_hover' : {'img' : root_res_dir+'tools/undo.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
+    'Undo_hover' : {'img' : root_res_dir+'tools/undo_hover.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
+    'Undo_disabled' : {'img' : root_res_dir+'tools/undo_disabled.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
 
 
-    'Single Run' : {'img' : root_res_dir+'tools/bg_eraser.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
-    'Single Run_hover' : {'img' : root_res_dir+'tools/bg_eraser_hover.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
+    # 'Single Run' : {'img' : root_res_dir+'tools/bg_eraser.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
+    # 'Single Run_hover' : {'img' : root_res_dir+'tools/bg_eraser_hover.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
+    # 'Single Run_disabled' : {'img' : root_res_dir+'tools/bg_eraser_disabled.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
 
     'Batch Run' : {'img' : root_res_dir+'tools/bg_eraser_all.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
     'Batch Run_hover' : {'img' : root_res_dir+'tools/bg_eraser_all_hover.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
+    'Batch Run_disabled' : {'img' : root_res_dir+'tools/bg_eraser_all_disabled.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
 
     'Batch Run_' : {'img' : root_res_dir+'tools/stop.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
     'Batch Run_hover_' : {'img' : root_res_dir+'tools/stop_hover.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
+    'Batch Run_disabled_' : {'img' : root_res_dir+'tools/stop_disabled.png',  'max':(512,512), 'min':(16,16), 'default':(16,16)},
 
 
 

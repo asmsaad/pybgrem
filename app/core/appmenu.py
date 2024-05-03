@@ -86,7 +86,7 @@ class AppMenu:
                     'command' : lambda : self.browse_video() , 
                     'shortcut' : '',  
                     'shortcut_command' : lambda e: self.browse_video_EL(e),
-                    'state' : 'normal',
+                    'state' : 'disable',
                 },
 
                 'Import folder' : {
