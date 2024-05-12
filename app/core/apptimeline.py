@@ -130,7 +130,7 @@ class AppTimeline:
         # self.info_frmae.pack(expand=True,fill=X)
 
     def _on_mousewheel(self, event):
-        #* If the canvas occupied space is greatedr than the windwo size then only alow the mouse scroll
+        #* If the canvas occupied space is greater than the window size, then only allow mouse scroll.
         window_width = self.root.winfo_width() - 28
         canvas_width = self.timeline_canvas.bbox("all")[2]
         if canvas_width > window_width:
