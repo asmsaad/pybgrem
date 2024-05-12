@@ -70,18 +70,21 @@ class AppTimeline:
         self.root = root
 
         self.base_frame = Frame(self.root,background='gray',height=TIMELINE_HEIGHT ,border=0,borderwidth=0,highlightthickness=0,bd=0)
+        self.base_frame.pack_propagate(False)
         self.base_frame.pack(expand=True,fill=X)
 
         
-        self.navtools_frmae = Frame(self.base_frame, background='#f0f0f0',height=30 ,border=0,borderwidth=0,highlightthickness=0,bd=0)
+        self.navtools_frmae = Frame(self.base_frame, background='red',height=30 ,border=0,borderwidth=0,highlightthickness=0,bd=0)
+        self.navtools_frmae.pack_propagate(False)
         self.navtools_frmae.pack(expand=True,fill=X)
+        
 
-
-        self.displayimage_frmae = Frame(self.base_frame, background='#f0f0f0',height=TIMELINE_DISPLAY_IMAGE_HEIGHT ,border=0,borderwidth=0,highlightthickness=0,bd=0)
+        #f0f0f0
+        self.displayimage_frmae = Frame(self.base_frame, background='orange',height=TIMELINE_DISPLAY_IMAGE_HEIGHT+40 ,border=0,borderwidth=0,highlightthickness=0,bd=0)
         self.displayimage_frmae.pack(expand=True,fill=X)
 
         self.label_frmae = Frame(self.displayimage_frmae, background='#f0f0f0',height=TIMELINE_DISPLAY_IMAGE_HEIGHT, width=16 ,border=0,borderwidth=0,highlightthickness=0,bd=0)
-        self.label_frmae.pack(side=LEFT)
+        self.label_frmae.pack(side=LEFT,anchor=NW)
 
         img_original = APP_VECT.get_centered_text('Original')
         original_img_lbl = Label(self.label_frmae, image= img_original, height=62,border=0,borderwidth=0,highlightthickness=0,bd=0 )
@@ -97,55 +100,106 @@ class AppTimeline:
 
         ttk.Separator(self.label_frmae, orient='horizontal').place(relx=0, y=62, width=30 , height=1)
 
-        self.timeline_canvas = Canvas(self.displayimage_frmae, background='white',height=TIMELINE_DISPLAY_IMAGE_HEIGHT ,border=0,borderwidth=0,highlightthickness=0,bd=0)
-        self.timeline_canvas.pack(expand=True,fill=X,side=LEFT)
+
+
+        #!--------------------------
+        self.base_timeline_canvas = Canvas(self.displayimage_frmae, background='green',height=TIMELINE_DISPLAY_IMAGE_HEIGHT+40 ,border=0,borderwidth=0,highlightthickness=0,bd=0)
+        self.base_timeline_canvas.pack(expand=True,fill=X,side=LEFT, anchor=NW)
+
+        self.timeline_canvas = Canvas(self.base_timeline_canvas,background='green',height=TIMELINE_DISPLAY_IMAGE_HEIGHT,border=0,borderwidth=0,highlightthickness=0,bd=0)
+        self.timeline_frame = Frame(self.timeline_canvas,background='green',height=TIMELINE_DISPLAY_IMAGE_HEIGHT,border=0,borderwidth=0,highlightthickness=0,bd=0)
+        self.vsb = Scrollbar(self.base_timeline_canvas, orient="horizontal", command=self.timeline_canvas.xview)
+        self.timeline_canvas.configure(xscrollcommand=self.vsb.set)
+
+        self.timeline_canvas.pack(side="top", fill="both", expand=True)
+        self.vsb.pack(side="bottom", fill="x")
+
+        self.timeline_canvas.create_window((0,0), window=self.timeline_frame, anchor="nw", tags=self.timeline_frame)
+
+        self.timeline_frame.bind("<Configure>", lambda event : self.on_frame_configure(event))
+        # self.timeline_canvas.bind("<Configure>", self.on_canvas_configure)
+        self.timeline_canvas.bind_all("<MouseWheel>", self._on_mousewheel)
+
+
+
+
+        #!--------------------------
 
 
         # self.info_frmae = Canvas(self.base_frame, background='blue',height=TIMELINE_INFO_BAR_HEIGHT ,border=0,borderwidth=0,highlightthickness=0,bd=0)
         # self.info_frmae.pack(expand=True,fill=X)
 
+    def _on_mousewheel(self, event):
+        #* If the canvas occupied space is greatedr than the windwo size then only alow the mouse scroll
+        window_width = self.root.winfo_width() - 28
+        canvas_width = self.timeline_canvas.bbox("all")[2]
+        if canvas_width > window_width:
+            self.timeline_canvas.xview_scroll(-1*(event.delta//120), "units")
+        
+    def on_frame_configure(self, event):
+        self.timeline_canvas.configure(scrollregion=self.timeline_canvas.bbox("all"))
+
+    def on_canvas_configure(self, event):
+        # width = event.width
+        # self.timeline_canvas.itemconfig(self.timeline_frame, width=width)
+        ...
+
+    # def scroll_left(self):
+    #     self.timeline_canvas.xview_scroll(-1, "units")
+
+    # def scroll_right(self):
+    #     self.timeline_canvas.xview_scroll(1, "units")
 
 
+    #todo timeline toolbar
     def set_toolbar(self):
-        # self.menu_bar_start_img = APP_VECT.get('start_tool_menu',(24,24))
-        for index, each_section in enumerate(self.tools):
-            self.tools_widgets[each_section] = {}
-            # Label(self.base_frame,padx=0 if index == 0 else 3,pady=2 , background='white').pack(side=LEFT)
-            # self.tools_widgets[each_section]['menu_bar_lbl'] = Label(self.base_frame,background='white',height=24,width=10,border=0,borderwidth=0,highlightthickness=0)
-            # self.tools_widgets[each_section]['menu_bar_lbl']['image'] = self.menu_bar_start_img
-            # self.tools_widgets[each_section]['menu_bar_lbl'].image = self.menu_bar_start_img
-            # self.tools_widgets[each_section]['menu_bar_lbl'].pack(side=LEFT)
-            # Label(self.base_frame,padx=1,pady=2).pack(side=LEFT)
 
-            for each_tool in self.tools[each_section]:
-                if 'space' not in each_tool:
-                    self.tools_widgets[each_section][each_tool] = {}
-                    self.tools_widgets[each_section][each_tool]['image'] = {'default': APP_VECT.get(each_tool,self.tools[each_section][each_tool]['dim']) , 'hover': APP_VECT.get(each_tool+'_hover',self.tools[each_section][each_tool]['dim'])}
-                    self.tools_widgets[each_section][each_tool]['button'] = Button(self.navtools_frmae,background='#f0f0f0',activebackground='#f0f0f0',height=TIMELINE_TOOL_BAR_HEIGHT,width=TIMELINE_TOOL_BAR_HEIGHT,border=0,borderwidth=0,highlightthickness=0)
-                    self.tools_widgets[each_section][each_tool]['button']['image'] = self.tools_widgets[each_section][each_tool]['image']['default']
-                    self.tools_widgets[each_section][each_tool]['button'].image = self.tools_widgets[each_section][each_tool]['image']['default']
-                    self.tools_widgets[each_section][each_tool]['button'].pack(side=self.tools[each_section][each_tool]['side'])
 
-                    # if each_section == 'Control' and each_tool == 'Batch Run':
-                    #     self.tools_widgets[each_section][each_tool]['image']['default_'] = APP_VECT.get(each_tool+'_',self.tools[each_section][each_tool]['dim'])
-                    #     self.tools_widgets[each_section][each_tool]['image']['hover_'] = APP_VECT.get(each_tool+'_hover_',self.tools[each_section][each_tool]['dim'])
+
+
+
+
+
+        ...
+        # # self.menu_bar_start_img = APP_VECT.get('start_tool_menu',(24,24))
+        # for index, each_section in enumerate(self.tools):
+        #     self.tools_widgets[each_section] = {}
+        #     # Label(self.base_frame,padx=0 if index == 0 else 3,pady=2 , background='white').pack(side=LEFT)
+        #     # self.tools_widgets[each_section]['menu_bar_lbl'] = Label(self.base_frame,background='white',height=24,width=10,border=0,borderwidth=0,highlightthickness=0)
+        #     # self.tools_widgets[each_section]['menu_bar_lbl']['image'] = self.menu_bar_start_img
+        #     # self.tools_widgets[each_section]['menu_bar_lbl'].image = self.menu_bar_start_img
+        #     # self.tools_widgets[each_section]['menu_bar_lbl'].pack(side=LEFT)
+        #     # Label(self.base_frame,padx=1,pady=2).pack(side=LEFT)
+
+        #     for each_tool in self.tools[each_section]:
+        #         if 'space' not in each_tool:
+        #             self.tools_widgets[each_section][each_tool] = {}
+        #             self.tools_widgets[each_section][each_tool]['image'] = {'default': APP_VECT.get(each_tool,self.tools[each_section][each_tool]['dim']) , 'hover': APP_VECT.get(each_tool+'_hover',self.tools[each_section][each_tool]['dim'])}
+        #             self.tools_widgets[each_section][each_tool]['button'] = Button(self.navtools_frmae,background='#f0f0f0',activebackground='#f0f0f0',height=TIMELINE_TOOL_BAR_HEIGHT,width=TIMELINE_TOOL_BAR_HEIGHT,border=0,borderwidth=0,highlightthickness=0)
+        #             self.tools_widgets[each_section][each_tool]['button']['image'] = self.tools_widgets[each_section][each_tool]['image']['default']
+        #             self.tools_widgets[each_section][each_tool]['button'].image = self.tools_widgets[each_section][each_tool]['image']['default']
+        #             self.tools_widgets[each_section][each_tool]['button'].pack(side=self.tools[each_section][each_tool]['side'])
+
+        #             # if each_section == 'Control' and each_tool == 'Batch Run':
+        #             #     self.tools_widgets[each_section][each_tool]['image']['default_'] = APP_VECT.get(each_tool+'_',self.tools[each_section][each_tool]['dim'])
+        #             #     self.tools_widgets[each_section][each_tool]['image']['hover_'] = APP_VECT.get(each_tool+'_hover_',self.tools[each_section][each_tool]['dim'])
                     
-                    # self.tools_widgets[each_section][each_tool]['button_effect'] = ImageHoverEffect(self.tools_widgets[each_section][each_tool]['button'], (self.tools_widgets[each_section][each_tool]['image']['default'], self.tools_widgets[each_section][each_tool]['image']['hover'] ) )
+        #             # self.tools_widgets[each_section][each_tool]['button_effect'] = ImageHoverEffect(self.tools_widgets[each_section][each_tool]['button'], (self.tools_widgets[each_section][each_tool]['image']['default'], self.tools_widgets[each_section][each_tool]['image']['hover'] ) )
 
-                    if each_tool == 'Left shift' or each_tool == 'Right shift':
-                        self.tools_widgets[each_section][each_tool]['button']['command'] = lambda type=each_tool.split()[0].lower() : self.scroll_canvas(type)
+        #             if each_tool == 'Left shift' or each_tool == 'Right shift':
+        #                 self.tools_widgets[each_section][each_tool]['button']['command'] = lambda type=each_tool.split()[0].lower() : self.scroll_canvas(type)
 
-                    elif each_tool == "Batch Run":
-                        self.tools_widgets[each_section][each_tool]['button']['command'] = lambda : self.on_click_batch_run_btn()
+        #             elif each_tool == "Batch Run":
+        #                 self.tools_widgets[each_section][each_tool]['button']['command'] = lambda : self.on_click_batch_run_btn()
 
                     
-                    self.tools_widgets[each_section][each_tool]['tooltip'] = Tooltip(self.tools_widgets[each_section][each_tool]['button'],each_tool)
-                    self.tools_widgets[each_section][each_tool]['hover_effect'] = ImageHoverEffect(self.tools_widgets[each_section][each_tool]['button'], (self.tools_widgets[each_section][each_tool]['image']['default'], self.tools_widgets[each_section][each_tool]['image']['hover'] ) , tooltip = self.tools_widgets[each_section][each_tool]['tooltip'])
-                    # ImageHoverEffect(self.tools_widgets[each_section][each_tool]['button'], (self.tools_widgets[each_section][each_tool]['image']['default'], self.tools_widgets[each_section][each_tool]['image']['hover'] ) , tooltip = self.tools_widgets[each_section][each_tool]['tooltip'])
+        #             self.tools_widgets[each_section][each_tool]['tooltip'] = Tooltip(self.tools_widgets[each_section][each_tool]['button'],each_tool)
+        #             self.tools_widgets[each_section][each_tool]['hover_effect'] = ImageHoverEffect(self.tools_widgets[each_section][each_tool]['button'], (self.tools_widgets[each_section][each_tool]['image']['default'], self.tools_widgets[each_section][each_tool]['image']['hover'] ) , tooltip = self.tools_widgets[each_section][each_tool]['tooltip'])
+        #             # ImageHoverEffect(self.tools_widgets[each_section][each_tool]['button'], (self.tools_widgets[each_section][each_tool]['image']['default'], self.tools_widgets[each_section][each_tool]['image']['hover'] ) , tooltip = self.tools_widgets[each_section][each_tool]['tooltip'])
 
-                    # Tooltip(self.tools_widgets[each_section][each_tool]['button'],each_tool)
-                else:
-                    Label(self.navtools_frmae,background='#f0f0f0',activebackground='#f0f0f0',height=1,width=1,border=0,borderwidth=0,highlightthickness=0).pack(side=self.tools[each_section][each_tool]['side'])
+        #             # Tooltip(self.tools_widgets[each_section][each_tool]['button'],each_tool)
+        #         else:
+        #             Label(self.navtools_frmae,background='#f0f0f0',activebackground='#f0f0f0',height=1,width=1,border=0,borderwidth=0,highlightthickness=0).pack(side=self.tools[each_section][each_tool]['side'])
 
 
 
@@ -179,6 +233,11 @@ class AppTimeline:
 
 
     def scrollable_timeline(self,selected_image,type='image'):
+
+        #* Delete all previous imports from the timeline.
+        [each_child.destroy() for each_child in self.timeline_frame.winfo_children()]
+            
+
         # if type == 'video':
         #     selected_video_files = selected_image
         #     print('**',selected_image)
@@ -205,9 +264,10 @@ class AppTimeline:
             self.timeline_widgets[img_path]['widgets'] = {}
             self.timeline_widgets[img_path]['widgets']['canvas'] = {}
             
-            self.timeline_widgets[img_path]['widgets']['canvas']['base'] = Canvas(self.timeline_canvas, bg='orange' if index%2 == 0 else 'yellow', width=TIMELINE_DISPLAY_IMAGE_WIDTH, height=TIMELINE_DISPLAY_IMAGE_HEIGHT ,border=0,borderwidth=0,highlightthickness=0)
-            self.timeline_canvas.create_window(index*(TIMELINE_DISPLAY_IMAGE_HEIGHT), 0, anchor='nw', window=self.timeline_widgets[img_path]['widgets']['canvas']['base'])
+            self.timeline_widgets[img_path]['widgets']['canvas']['base'] = Canvas(self.timeline_frame, bg='orange' if index%2 == 0 else 'yellow', width=TIMELINE_DISPLAY_IMAGE_WIDTH, height=TIMELINE_DISPLAY_IMAGE_HEIGHT ,border=0,borderwidth=0,highlightthickness=0)
+            #! self.timeline_canvas.create_window(index*(TIMELINE_DISPLAY_IMAGE_HEIGHT), 0, anchor='nw', window=self.timeline_widgets[img_path]['widgets']['canvas']['base'])
             # self.timeline_widgets[img_path]['widgets']['canvas']['base'].pack_propagate(True)
+            self.timeline_widgets[img_path]['widgets']['canvas']['base'].pack(side=LEFT)
             
             
             
@@ -495,13 +555,14 @@ class AppTimeline:
         self.infobar.initiate_progressbar(total_images,title = 'Removing background',progress=0)
         
         
-        #* Batch Run Button turns into Stop Batch Button. 
+        # #* Batch Run Button turns into Stop Batch Button. 
         self.stop_batch_run_btn_enable = True
-        each_tool = 'Batch Run'
-        self.tools_widgets['Control'][each_tool]['image']['default'] = APP_VECT.get(each_tool+'_',(20,20))
-        self.tools_widgets['Control'][each_tool]['image']['hover'] = APP_VECT.get(each_tool+'_hover_',(20,20))
-        self.tools_widgets['Control'][each_tool]['hover_effect'].update(default_img=self.tools_widgets['Control'][each_tool]['image']['default'],hover_img=self.tools_widgets['Control'][each_tool]['image']['hover'])
-        self.tools_widgets['Control'][each_tool]['button']['command'] = lambda : self.terminate_batch_run() # Modified with the terminate batch run command.
+        self.apptoolsbar.make_batch_run__stop()
+        # each_tool = 'Batch Run'
+        # self.tools_widgets['Control'][each_tool]['image']['default'] = APP_VECT.get(each_tool+'_',(20,20))
+        # self.tools_widgets['Control'][each_tool]['image']['hover'] = APP_VECT.get(each_tool+'_hover_',(20,20))
+        # self.tools_widgets['Control'][each_tool]['hover_effect'].update(default_img=self.tools_widgets['Control'][each_tool]['image']['default'],hover_img=self.tools_widgets['Control'][each_tool]['image']['hover'])
+        # self.tools_widgets['Control'][each_tool]['button']['command'] = lambda : self.terminate_batch_run() # Modified with the terminate batch run command.
 
 
         #* Disabling all types of collation processes such as importing, saving, and deleting from tools and menu.
@@ -561,13 +622,14 @@ class AppTimeline:
         self.running_ongoing_action(type='normal',previous_menu_settings=previous_menu_settings) #! enable all type of import and saves
 
         
-        #* Enable running another batch mode after finishing/terminating the previous batch run.
-        self.tools_widgets['Control'][each_tool]['image']['default'] = APP_VECT.get(each_tool,self.tools['Control'][each_tool]['dim'])
-        self.tools_widgets['Control'][each_tool]['image']['hover'] = APP_VECT.get(each_tool+'_hover',self.tools['Control'][each_tool]['dim'])
-        self.tools_widgets['Control']['Batch Run']['button']['state'] = NORMAL
-        self.tools_widgets['Control'][each_tool]['hover_effect'].update(default_img=self.tools_widgets['Control'][each_tool]['image']['default'],hover_img=self.tools_widgets['Control'][each_tool]['image']['hover'])
-        self.tools_widgets['Control'][each_tool]['button']['command'] = lambda : self.on_click_batch_run_btn() # Modified with the batch run command.
-        print('*********************************')
+        # #* Enable running another batch mode after finishing/terminating the previous batch run.
+        self.apptoolsbar.make_stop_batch__run()
+        # self.tools_widgets['Control'][each_tool]['image']['default'] = APP_VECT.get(each_tool,self.tools['Control'][each_tool]['dim'])
+        # self.tools_widgets['Control'][each_tool]['image']['hover'] = APP_VECT.get(each_tool+'_hover',self.tools['Control'][each_tool]['dim'])
+        # self.tools_widgets['Control']['Batch Run']['button']['state'] = NORMAL
+        # self.tools_widgets['Control'][each_tool]['hover_effect'].update(default_img=self.tools_widgets['Control'][each_tool]['image']['default'],hover_img=self.tools_widgets['Control'][each_tool]['image']['hover'])
+        # self.tools_widgets['Control'][each_tool]['button']['command'] = lambda : self.on_click_batch_run_btn() # Modified with the batch run command.
+        # print('*********************************')
         
 
     # todo Storing processed images into a variable for saving function call.
@@ -577,8 +639,9 @@ class AppTimeline:
 
     def terminate_batch_run(self):
         self.stop_batch_run_btn_enable = False
-        self.tools_widgets['Control']['Batch Run']['button']['state'] = DISABLED
-        print('&&&&&&&&&')
+        # self.tools_widgets['Control']['Batch Run']['button']['state'] = DISABLED
+        # print('&&&&&&&&&')
+        #! Need to disable batch run btn
 
 
 
@@ -627,7 +690,8 @@ class AppTimeline:
     def get_canvas(self,canvas_obj):
         self.appcanvas = canvas_obj
 
-        
+    def get_apptoolsbar(self,apptoolsbar):
+        self.apptoolsbar = apptoolsbar
 
     def get_btn_control(self,running_ongoing_action):
         self.running_ongoing_action = running_ongoing_action

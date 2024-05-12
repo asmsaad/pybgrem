@@ -84,6 +84,30 @@ class WindowConfiguration:
         self.window = window
         # self.window.wm_attributes("-topmost", 1)
 
+
+    def adjust_geomety_basedon_screen_size(self):
+        # Get screen width and height
+        screen_width = self.window.winfo_screenwidth()
+        screen_height = self.window.winfo_screenheight()
+
+        # Print screen width and height
+        print("Screen width:", screen_width)
+        print("Screen height:", screen_height)
+
+        # Calculate 60% of the width and height
+        width_60_percent = int(screen_width * 0.6)
+        height_60_percent = int(screen_height * 0.6)
+
+        # Print 60% of the width and height
+        print("60% of screen width:", width_60_percent)
+        print("60% of screen height:", height_60_percent)
+
+
+        self.geometry(width_60_percent , height_60_percent)
+        # return width_60_percent , height_60_percent
+
+
+
     def geometry(self, width, height, align='center') -> None:
         self.width = width
         self.height = height
