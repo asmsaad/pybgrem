@@ -114,16 +114,18 @@ class App:
 
 
         
-        #todo InfoBar
-        self.infobar = InfoBar(self.root)
-        #*pass to classes
-        self.apptimeline.get_infobar(self.infobar)
-        APP_SAVE_FILES.pass_infobar(self.infobar) #!passing infobar to save
+
 
         
 
         self.appmenuicon.set(self.top_toolsbar_frame)
         self.appmenuicon.set(self.apptimeline.navtools_frmae) #* Toolsbar at timeline
+
+        #todo InfoBar
+        self.infobar = InfoBar(self.apptimeline.navtools_frmae)
+        #*pass to classes
+        self.apptimeline.get_infobar(self.infobar)
+        APP_SAVE_FILES.pass_infobar(self.infobar) #!passing infobar to save
 
 
         #! Disabled For a time being...
